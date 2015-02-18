@@ -26,8 +26,8 @@ app.config = config;
 
 /*   For HTTPS web server
 //var options = {
-//    key: fs.readFileSync(config.ssl.key'/home/ec2-user/eokey.pem'),
-//    cert: fs.readFileSync(config.ssl.cert'/home/ec2-user/eocrt.pem')
+//    key: fs.readFileSync(config.ssl.key),
+//    cert: fs.readFileSync(config.ssl.cert)
 //};
 
 //app.server = https.createServer(options, app);
@@ -44,8 +44,11 @@ app.db.once('open', function () {
   //and... we have a data store
 });
 
-//config nosql mongodb data models
+//config nosql (mongodb) data models
 require('./nosql-models')(app, mongoose);
+
+//config relational (mysql) data models
+app.set('rdbms-models', require('./rdbms-models'));
 
 //settings
 app.disable('x-powered-by');
