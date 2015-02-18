@@ -1,6 +1,6 @@
 'use strict';
 
-exports = module.exports = function(app, mongoose) {
+exports = module.exports = function(sequelize) {
 
   //Setup
   sequelize
@@ -34,5 +34,5 @@ exports = module.exports = function(app, mongoose) {
 
   // export connection
   module.exports.sequelize = sequelize;
-  
+
 };
