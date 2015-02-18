@@ -8,39 +8,39 @@ module.exports = function(grunt) {
         files: [
           {
             expand: true, cwd: 'node_modules/bootstrap/',
-            src: ['js/**', 'less/**'], dest: 'public/vendor/bootstrap/'
+            src: ['js/**', 'less/**'], dest: 'client/vendor/bootstrap/'
           },
           {
             expand: true, cwd: 'node_modules/backbone/',
-            src: ['backbone.js'], dest: 'public/vendor/backbone/'
+            src: ['backbone.js'], dest: 'client/vendor/backbone/'
           },
           {
             expand: true, cwd: 'node_modules/font-awesome/',
-            src: ['fonts/**', 'less/**'], dest: 'public/vendor/font-awesome/'
+            src: ['fonts/**', 'less/**'], dest: 'client/vendor/font-awesome/'
           },
           {
             expand: true, cwd: 'node_modules/html5shiv/dist/',
-            src: ['html5shiv.js'], dest: 'public/vendor/html5shiv/'
+            src: ['html5shiv.js'], dest: 'client/vendor/html5shiv/'
           },
           {
             expand: true, cwd: 'node_modules/jquery/dist/',
-            src: ['jquery.js'], dest: 'public/vendor/jquery/'
+            src: ['jquery.js'], dest: 'client/vendor/jquery/'
           },
           {
             expand: true, cwd: 'node_modules/jquery.cookie/',
-            src: ['jquery.cookie.js'], dest: 'public/vendor/jquery.cookie/'
+            src: ['jquery.cookie.js'], dest: 'client/vendor/jquery.cookie/'
           },
           {
             expand: true, cwd: 'node_modules/moment/',
-            src: ['moment.js'], dest: 'public/vendor/momentjs/'
+            src: ['moment.js'], dest: 'client/vendor/momentjs/'
           },
           {
             expand: true, cwd: 'node_modules/respond.js/src/',
-            src: ['respond.js'], dest: 'public/vendor/respond/'
+            src: ['respond.js'], dest: 'client/vendor/respond/'
           },
           {
             expand: true, cwd: 'node_modules/underscore/',
-            src: ['underscore.js'], dest: 'public/vendor/underscore/'
+            src: ['underscore.js'], dest: 'client/vendor/underscore/'
           }
         ]
       }
@@ -59,7 +59,7 @@ module.exports = function(grunt) {
         options: {
           ignore: [
             'node_modules/**',
-            'public/**'
+            'client/**'
           ],
           ext: 'js'
         }
@@ -68,27 +68,27 @@ module.exports = function(grunt) {
     watch: {
       clientJS: {
          files: [
-          'public/layouts/**/*.js', '!public/layouts/**/*.min.js',
-          'public/views/**/*.js', '!public/views/**/*.min.js'
+          'client/layouts/**/*.js', '!client/layouts/**/*.min.js',
+          'client/views/**/*.js', '!client/views/**/*.min.js'
          ],
          tasks: ['newer:uglify', 'newer:jshint:client']
       },
       serverJS: {
-         files: ['views/**/*.js'],
+         files: ['api/**/*.js'],
          tasks: ['newer:jshint:server']
       },
       clientLess: {
          files: [
-          'public/layouts/**/*.less',
-          'public/views/**/*.less',
-          'public/less/**/*.less'
+          'client/layouts/**/*.less',
+          'client/views/**/*.less',
+          'client/less/**/*.less'
          ],
          tasks: ['newer:less']
       },
       layoutLess: {
         files: [
-          'public/layouts/**/*.less',
-          'public/less/**/*.less'
+          'client/layouts/**/*.less',
+          'client/less/**/*.less'
         ],
         tasks: ['less:layouts']
       }
@@ -102,40 +102,40 @@ module.exports = function(grunt) {
       },
       layouts: {
         files: {
-          'public/layouts/core.min.js': [
-            'public/vendor/jquery/jquery.js',
-            'public/vendor/jquery.cookie/jquery.cookie.js',
-            'public/vendor/underscore/underscore.js',
-            'public/vendor/backbone/backbone.js',
-            'public/vendor/bootstrap/js/affix.js',
-            'public/vendor/bootstrap/js/alert.js',
-            'public/vendor/bootstrap/js/button.js',
-            'public/vendor/bootstrap/js/carousel.js',
-            'public/vendor/bootstrap/js/collapse.js',
-            'public/vendor/bootstrap/js/dropdown.js',
-            'public/vendor/bootstrap/js/modal.js',
-            'public/vendor/bootstrap/js/tooltip.js',
-            'public/vendor/bootstrap/js/popover.js',
-            'public/vendor/bootstrap/js/scrollspy.js',
-            'public/vendor/bootstrap/js/tab.js',
-            'public/vendor/bootstrap/js/transition.js',
-            'public/vendor/momentjs/moment.js',
-            'public/layouts/core.js'
+          'client/layouts/core.min.js': [
+            'client/vendor/jquery/jquery.js',
+            'client/vendor/jquery.cookie/jquery.cookie.js',
+            'client/vendor/underscore/underscore.js',
+            'client/vendor/backbone/backbone.js',
+            'client/vendor/bootstrap/js/affix.js',
+            'client/vendor/bootstrap/js/alert.js',
+            'client/vendor/bootstrap/js/button.js',
+            'client/vendor/bootstrap/js/carousel.js',
+            'client/vendor/bootstrap/js/collapse.js',
+            'client/vendor/bootstrap/js/dropdown.js',
+            'client/vendor/bootstrap/js/modal.js',
+            'client/vendor/bootstrap/js/tooltip.js',
+            'client/vendor/bootstrap/js/popover.js',
+            'client/vendor/bootstrap/js/scrollspy.js',
+            'client/vendor/bootstrap/js/tab.js',
+            'client/vendor/bootstrap/js/transition.js',
+            'client/vendor/momentjs/moment.js',
+            'client/layouts/core.js'
           ],
-          'public/layouts/ie-sucks.min.js': [
-            'public/vendor/html5shiv/html5shiv.js',
-            'public/vendor/respond/respond.js',
-            'public/layouts/ie-sucks.js'
+          'client/layouts/ie-sucks.min.js': [
+            'client/vendor/html5shiv/html5shiv.js',
+            'client/vendor/respond/respond.js',
+            'client/layouts/ie-sucks.js'
           ],
-          'public/layouts/admin.min.js': ['public/layouts/admin.js']
+          'client/layouts/admin.min.js': ['client/layouts/admin.js']
         }
       },
       views: {
         files: [{
           expand: true,
-          cwd: 'public/views/',
+          cwd: 'client/views/',
           src: ['**/*.js', '!**/*.min.js'],
-          dest: 'public/views/',
+          dest: 'client/views/',
           ext: '.min.js'
         }]
       }
@@ -145,13 +145,13 @@ module.exports = function(grunt) {
         options: {
           jshintrc: '.jshintrc-client',
           ignores: [
-            'public/layouts/**/*.min.js',
-            'public/views/**/*.min.js'
+            'client/layouts/**/*.min.js',
+            'client/views/**/*.min.js'
           ]
         },
         src: [
-          'public/layouts/**/*.js',
-          'public/views/**/*.js'
+          'client/layouts/**/*.js',
+          'client/views/**/*.js'
         ]
       },
       server: {
@@ -159,8 +159,8 @@ module.exports = function(grunt) {
           jshintrc: '.jshintrc-server'
         },
         src: [
-          'schema/**/*.js',
-          'views/**/*.js'
+          'nosql-schema/**/*.js',
+          'api/**/*.js'
         ]
       }
     },
@@ -170,20 +170,20 @@ module.exports = function(grunt) {
       },
       layouts: {
         files: {
-          'public/layouts/core.min.css': [
-            'public/less/bootstrap-build.less',
-            'public/less/font-awesome-build.less',
-            'public/layouts/core.less'
+          'client/layouts/core.min.css': [
+            'client/less/bootstrap-build.less',
+            'client/less/font-awesome-build.less',
+            'client/layouts/core.less'
           ],
-          'public/layouts/admin.min.css': ['public/layouts/admin.less']
+          'client/layouts/admin.min.css': ['client/layouts/admin.less']
         }
       },
       views: {
         files: [{
           expand: true,
-          cwd: 'public/views/',
+          cwd: 'client/views/',
           src: ['**/*.less'],
-          dest: 'public/views/',
+          dest: 'client/views/',
           ext: '.min.css'
         }]
       }
@@ -191,20 +191,20 @@ module.exports = function(grunt) {
     clean: {
       js: {
         src: [
-          'public/layouts/**/*.min.js',
-          'public/layouts/**/*.min.js.map',
-          'public/views/**/*.min.js',
-          'public/views/**/*.min.js.map'
+          'client/layouts/**/*.min.js',
+          'client/layouts/**/*.min.js.map',
+          'client/views/**/*.min.js',
+          'client/views/**/*.min.js.map'
         ]
       },
       css: {
         src: [
-          'public/layouts/**/*.min.css',
-          'public/views/**/*.min.css'
+          'client/layouts/**/*.min.css',
+          'client/views/**/*.min.css'
         ]
       },
       vendor: {
-        src: ['public/vendor/**']
+        src: ['client/vendor/**']
       }
     }
   });

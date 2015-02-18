@@ -33,19 +33,19 @@ app.db.once('open', function () {
   //and... we have a data store
 });
 
-//config data models
-require('./models')(app, mongoose);
+//config nosql mongodb data models
+require('./nosql-models')(app, mongoose);
 
 //settings
 app.disable('x-powered-by');
 app.set('port', config.port);
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, 'api')); //once we only send data does this go away?
 app.set('view engine', 'jade');
 
 //middleware
 app.use(require('morgan')('dev'));
 app.use(require('compression')());
-app.use(require('serve-static')(path.join(__dirname, 'public')));
+app.use(require('serve-static')(path.join(__dirname, 'client')));
 app.use(require('method-override')());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -83,7 +83,7 @@ require('./passport')(app, passport);
 require('./routes')(app, passport);
 
 //custom (friendly) error handler
-app.use(require('./views/http/index').http500);
+app.use(require('./api/http/index').http500);
 
 //setup utilities
 app.utility = {};
