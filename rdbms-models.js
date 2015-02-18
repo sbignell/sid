@@ -1,13 +1,6 @@
-var Sequelize = require('sequelize');
+'use strict';
 
-// initialize database connection
-var sequelize = new Sequelize('simon', config.mysql.username, config.mysql.password, {
-      dialect: 'mysql', // or 'sqlite', 'postgres', 'mariadb'
-      host: config.mysql.host,
-      port:    config.mysql.port
-    });
-
-
+//Setup
 sequelize
   .authenticate()
   .complete(function(err) {

@@ -33,6 +33,7 @@ exports.smtp = {
 exports.mysql = {
   host: 'localhost', //process.env.MYSQL_HOST,
   port: '3306', //process.env.MYSQL_PORT,
+  db: 'simon', //process.env.DB,
   username: 'user', //process.env.MYSQL_USERNAME,
   password: 'pass' //process.env.MYSQL_PASSWORD
 };

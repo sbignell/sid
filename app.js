@@ -7,6 +7,7 @@ var config = require('./config'),
     bodyParser = require('body-parser'),
     session = require('express-session'),
     mongoStore = require('connect-mongo')(session),
+    Sequelize = require('sequelize'),
     //fs = require('fs'),
     //log = require('log'),
     //mysql = require('mysql'),
@@ -46,6 +47,13 @@ app.db.once('open', function () {
 
 //config nosql (mongodb) data models
 require('./nosql-models')(app, mongoose);
+
+// create mysql ORM object
+var sequelize = new Sequelize(config.mysql.db, config.mysql.username, config.mysql.password, {
+    dialect: 'mysql', // or 'sqlite', 'postgres', 'mariadb'
+    host: config.mysql.host,
+    port: config.mysql.port
+  });
 
 //config relational (mysql) data models
 app.set('rdbms-models', require('./rdbms-models'));
