@@ -11,6 +11,7 @@ var config = require('./config'),
     //log = require('log'),
     //mysql = require('mysql'),
     http = require('http'),
+    //https = require('https'),
     path = require('path'),
     passport = require('passport'),
     mongoose = require('mongoose'),
@@ -23,7 +24,17 @@ var app = express();
 //keep reference to config
 app.config = config;
 
-//setup the web server
+/*   For HTTPS web server
+//var options = {
+//    key: fs.readFileSync(config.ssl.key'/home/ec2-user/eokey.pem'),
+//    cert: fs.readFileSync(config.ssl.cert'/home/ec2-user/eocrt.pem')
+//};
+
+//app.server = https.createServer(options, app);
+
+*/
+
+// For HTTP web server
 app.server = http.createServer(app);
 
 //setup mongoose
