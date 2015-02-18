@@ -14,8 +14,10 @@ exports.loginAttempts = {
   logExpiration: '20m'
 };
 exports.requireAccountVerification = false;
-exports.ssl.key = '/home/ec2-user/eokey.pem';
-exports.ssl.cert = '/home/ec2-user/eocrt.pem';
+exports.ssl = {
+  key = '/home/ec2-user/eokey.pem',
+  cert = '/home/ec2-user/eocrt.pem'
+};
 exports.smtp = {
   from: {
     name: process.env.SMTP_FROM_NAME || exports.projectName,
@@ -28,10 +30,12 @@ exports.smtp = {
     ssl: true
   }
 };
-exports.mysql.host = 'localhost'; //process.env.MYSQL_HOST;
-exports.mysql.port = '3306'; //process.env.MYSQL_PORT;
-exports.mysql.username = 'user'; //process.env.MYSQL_USERNAME;
-exports.mysql.password = 'pass'; //process.env.MYSQL_PASSWORD;
+exports.mysql = {
+  host = 'localhost', //process.env.MYSQL_HOST,
+  port = '3306', //process.env.MYSQL_PORT,
+  username = 'user', //process.env.MYSQL_USERNAME,
+  password = 'pass' //process.env.MYSQL_PASSWORD
+};
 exports.oauth = {
   twitter: {
     key: process.env.TWITTER_OAUTH_KEY || '',
