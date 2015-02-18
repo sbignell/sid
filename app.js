@@ -49,14 +49,14 @@ app.db.once('open', function () {
 require('./nosql-models')(app, mongoose);
 
 // create mysql ORM object
-var sequelize = new Sequelize(config.mysql.db, config.mysql.username, config.mysql.password, {
+/*var sequelize = new Sequelize(config.mysql.db, config.mysql.username, config.mysql.password, {
     dialect: 'mysql', // or 'sqlite', 'postgres', 'mariadb'
     host: config.mysql.host,
     port: config.mysql.port
-  });
+  });*/
 
 //config relational (mysql) data models
-app.set('rdbms-models', require('./rdbms-models')(sequelize));
+//app.set('rdbms-models', require('./rdbms-models')(sequelize));
 
 //settings
 app.disable('x-powered-by');
