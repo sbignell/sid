@@ -15,8 +15,8 @@ exports.loginAttempts = {
 };
 exports.requireAccountVerification = false;
 exports.ssl = {
-  key = '/home/ec2-user/eokey.pem',
-  cert = '/home/ec2-user/eocrt.pem'
+  key: '/home/ec2-user/eokey.pem',
+  cert: '/home/ec2-user/eocrt.pem'
 };
 exports.smtp = {
   from: {
@@ -31,10 +31,10 @@ exports.smtp = {
   }
 };
 exports.mysql = {
-  host = 'localhost', //process.env.MYSQL_HOST,
-  port = '3306', //process.env.MYSQL_PORT,
-  username = 'user', //process.env.MYSQL_USERNAME,
-  password = 'pass' //process.env.MYSQL_PASSWORD
+  host: 'localhost', //process.env.MYSQL_HOST,
+  port: '3306', //process.env.MYSQL_PORT,
+  username: 'user', //process.env.MYSQL_USERNAME,
+  password: 'pass' //process.env.MYSQL_PASSWORD
 };
 exports.oauth = {
   twitter: {
