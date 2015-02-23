@@ -30,13 +30,13 @@ function ensureAccount(req, res, next) {
 
 exports = module.exports = function(app, passport) {
   //front end
-  app.get('/', require('./api/index').init);
-  app.get('/about/', require('./api/about/index').init);
-  app.get('/contact/', require('./api/contact/index').init);
+  //app.get('/', require('./api/index').init);
+  //app.get('/about/', require('./api/about/index').init);
+  //app.get('/contact/', require('./api/contact/index').init);
   app.post('/contact/', require('./api/contact/index').sendMessage);
 
   //sign up
-  app.get('/signup/', require('./api/signup/index').init);
+  //app.get('/signup/', require('./api/signup/index').init);
   app.post('/signup/', require('./api/signup/index').signup);
 
   //social sign up
@@ -53,7 +53,7 @@ exports = module.exports = function(app, passport) {
   app.get('/signup/tumblr/callback/', require('./api/signup/index').signupTumblr);
 
   //login/out
-  app.get('/login/', require('./api/login/index').init);
+  //app.get('/login/', require('./api/login/index').init);
   app.post('/login/', require('./api/login/index').login);
   app.get('/login/forgot/', require('./api/login/forgot/index').init);
   app.post('/login/forgot/', require('./api/login/forgot/index').send);
