@@ -27,12 +27,12 @@ exports.signup = function(req, res){
       workflow.outcome.errfor.username = 'only use letters, numbers, \'-\', \'_\'';
     }
 
-    if (!req.body.email) {
+    /*if (!req.body.email) {
       workflow.outcome.errfor.email = 'required';
     }
     else if (!/^[a-zA-Z0-9\-\_\.\+]+@[a-zA-Z0-9\-\_\.]+\.[a-zA-Z0-9\-\_]+$/.test(req.body.email)) {
       workflow.outcome.errfor.email = 'invalid email format';
-    }
+    }*/
 
     if (!req.body.password) {
       workflow.outcome.errfor.password = 'required';
@@ -43,6 +43,7 @@ exports.signup = function(req, res){
     }
 
     workflow.emit('duplicateUsernameCheck');
+    //workflow.emit('duplicateEmailCheck');
   });
 
   workflow.on('duplicateUsernameCheck', function() {
@@ -60,7 +61,7 @@ exports.signup = function(req, res){
     });
   });
 
-  workflow.on('duplicateEmailCheck', function() {
+  /*workflow.on('duplicateEmailCheck', function() {
     req.app.db.models.User.findOne({ email: req.body.email.toLowerCase() }, function(err, user) {
       if (err) {
         return workflow.emit('exception', err);
@@ -73,7 +74,7 @@ exports.signup = function(req, res){
 
       workflow.emit('createUser');
     });
-  });
+  });*/
 
   workflow.on('createUser', function() {
     req.app.db.models.User.encryptPassword(req.body.password, function(err, hash) {
@@ -84,7 +85,7 @@ exports.signup = function(req, res){
       var fieldsToSet = {
         isActive: 'yes',
         username: req.body.username,
-        email: req.body.email.toLowerCase(),
+        //email: req.body.email.toLowerCase(),
         password: hash,
         search: [
           req.body.username,
