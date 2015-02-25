@@ -21,12 +21,12 @@ exports.ssl = {
 exports.smtp = {
   from: {
     name: process.env.SMTP_FROM_NAME || exports.projectName,
-    address: process.env.SMTP_FROM_ADDRESS || 'missioncontrol@iamsimon.io'
+    address: process.env.SMTP_FROM_ADDRESS || 'contact@estateops.com'
   },
   credentials: {
-    user: process.env.SMTP_USERNAME || 'missioncontrol@iamsimon.io',
-    password: process.env.SMTP_PASSWORD || 'bl4rg!',
-    host: process.env.SMTP_HOST || 'smtp.gmail.com',
+    user: process.env.SMTP_USERNAME || 'contact@estateops.com',
+    password: process.env.SMTP_PASSWORD || 'iq160e73',
+    host: process.env.SMTP_HOST || 'oxmail.registrar-servers.com',
     ssl: true
   }
 };
