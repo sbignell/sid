@@ -106,9 +106,6 @@ exports.login = function(req, res){
           if (err) {
             return workflow.emit('exception', err);
           }
-
-          console.dir(user);
-          console.log('>>>>>>');
           
           workflow.emit('response');
         });
