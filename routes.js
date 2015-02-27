@@ -29,12 +29,7 @@ function ensureAccount(req, res, next) {
 }
 
 exports = module.exports = function(app, passport) {
-  //front end
-  //app.get('/', require('./api/index').init);
-  //app.get('/about/', require('./api/about/index').init);
 
-  //sign up
-  //app.get('/signup/', require('./api/signup/index').init);
   app.post('/api/v1/signup/', require('./api/signup/index').signup);
 
   //social sign up
@@ -53,9 +48,9 @@ exports = module.exports = function(app, passport) {
   //login/out
   //app.get('/login/', require('./api/login/index').init);
   app.post('/api/v1/login/', require('./api/login/index').login);
-  app.get('/login/forgot/', require('./api/login/forgot/index').init);
+  //app.get('/login/forgot/', require('./api/login/forgot/index').init);
   app.post('/api/v1/login/forgot/', require('./api/login/forgot/index').send);
-  app.get('/login/reset/', require('./api/login/reset/index').init);
+  //app.get('/login/reset/', require('./api/login/reset/index').init);
   app.get('/api/v1/login/reset/:email/:token/', require('./api/login/reset/index').init);
   app.put('/api/v1/login/reset/:email/:token/', require('./api/login/reset/index').set);
   app.get('/logout/', require('./api/logout/index').init);
