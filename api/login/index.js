@@ -109,7 +109,7 @@ exports.login = function(req, res){
 
           console.dir(user);
           console.log('>>>>>>');
-          console.dir(response);
+          
           workflow.emit('response');
         });
       }
