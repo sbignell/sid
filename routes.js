@@ -164,6 +164,10 @@ exports = module.exports = function(app, passport) {
   app.get('/account/settings/tumblr/callback/', require('./api/account/settings/index').connectTumblr);
   app.get('/account/settings/tumblr/disconnect/', require('./api/account/settings/index').disconnectTumblr);
 
+  //app
+
+  app.get('/cellar/', require('./api/cellar/index').find);
+
   //route not found
   app.all('*', require('./api/http/index').http404);
 };
