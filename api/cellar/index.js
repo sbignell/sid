@@ -28,9 +28,13 @@ exports.find = function(req, res, next){
       filters.search = new RegExp('^.*?'+ req.query.search +'.*$', 'i');
     }
 
+    console.log('2a');
+
     if (req.query.status) {
       filters['status.id'] = req.query.status;
     }
+
+    console.log('2b');
 
     req.app.db.models.Account.pagedFind({
       filters: filters,
@@ -39,6 +43,7 @@ exports.find = function(req, res, next){
       page: req.query.page,
       sort: req.query.sort
     }, function(err, results) {
+      console.log('2c');
       if (err) {
         return callback(err, null);
       }
@@ -49,17 +54,19 @@ exports.find = function(req, res, next){
   };
 
   var asyncFinally = function(err, results) {
+    console.log('3');
     if (err) {
       return next(err);
     }
 
     if (req.xhr) {
+      console.log('3a');
       res.header('Cache-Control', 'no-cache, no-store, must-revalidate');
       outcome.results.filters = req.query;
       res.send(outcome.results);
     }
     else {
-      console.log('3');
+      console.log('3a');
       outcome.results.filters = req.query;
       res.render('admin/accounts/index', {
         data: {
@@ -70,7 +77,6 @@ exports.find = function(req, res, next){
     }
   };
 
-  console.log('1');
   require('async').parallel([getStatusOptions, getResults], asyncFinally);
 };
 
