@@ -52,12 +52,17 @@ exports.find = function(req, res, next){
     }
 
     if (req.xhr) {
+
       res.header('Cache-Control', 'no-cache, no-store, must-revalidate');
       outcome.results.filters = req.query;
+      console.log('sending xhr: ');
+      console.dir(outcome.results);
       res.send(outcome.results);
     }
     else {
       outcome.results.filters = req.query;
+      console.log('sending with template: ');
+      console.dir(outcome.results);
       res.render('admin/accounts/index', {
         data: {
           results: escape(JSON.stringify(outcome.results)),
