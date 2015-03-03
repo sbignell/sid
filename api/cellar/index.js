@@ -4,14 +4,14 @@ exports.find = function(req, res, next){
   var outcome = {};
 
   var getStatusOptions = function(callback) {
-    /*req.app.db.models.Status.find({ pivot: 'Account' }, 'name').sort('name').exec(function(err, statuses) {
+    req.app.db.models.Status.find({ pivot: 'Account' }, 'name').sort('name').exec(function(err, statuses) {
       if (err) {
         return callback(err, null);
       }
 
       outcome.statuses = statuses;
       return callback(null, 'done');
-    });*/
+    });
   };
 
   var getResults = function(callback) {
@@ -21,20 +21,14 @@ exports.find = function(req, res, next){
     req.query.page = req.query.page ? parseInt(req.query.page, null) : 1;
     req.query.sort = req.query.sort ? req.query.sort : '_id';
 
-    console.log('2');
-
     var filters = {};
     if (req.query.search) {
       filters.search = new RegExp('^.*?'+ req.query.search +'.*$', 'i');
     }
 
-    console.log('2a');
-
     if (req.query.status) {
       filters['status.id'] = req.query.status;
     }
-
-    console.log('2b');
 
     req.app.db.models.Account.pagedFind({
       filters: filters,
@@ -43,7 +37,6 @@ exports.find = function(req, res, next){
       page: req.query.page,
       sort: req.query.sort
     }, function(err, results) {
-      console.log('2c');
       if (err) {
         return callback(err, null);
       }
@@ -54,19 +47,16 @@ exports.find = function(req, res, next){
   };
 
   var asyncFinally = function(err, results) {
-    console.log('3');
     if (err) {
       return next(err);
     }
 
     if (req.xhr) {
-      console.log('3a');
       res.header('Cache-Control', 'no-cache, no-store, must-revalidate');
       outcome.results.filters = req.query;
       res.send(outcome.results);
     }
     else {
-      console.log('3a');
       outcome.results.filters = req.query;
       res.render('admin/accounts/index', {
         data: {
