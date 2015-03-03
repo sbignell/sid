@@ -21,6 +21,8 @@ exports.find = function(req, res, next){
     req.query.page = req.query.page ? parseInt(req.query.page, null) : 1;
     req.query.sort = req.query.sort ? req.query.sort : '_id';
 
+    console.log('2');
+
     var filters = {};
     if (req.query.search) {
       filters.search = new RegExp('^.*?'+ req.query.search +'.*$', 'i');
@@ -57,6 +59,7 @@ exports.find = function(req, res, next){
       res.send(outcome.results);
     }
     else {
+      console.log('3');
       outcome.results.filters = req.query;
       res.render('admin/accounts/index', {
         data: {
@@ -67,6 +70,7 @@ exports.find = function(req, res, next){
     }
   };
 
+  console.log('1');
   require('async').parallel([getStatusOptions, getResults], asyncFinally);
 };
 
