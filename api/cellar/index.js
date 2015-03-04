@@ -31,8 +31,8 @@ exports.find = function(req, res, next){
     }
 
     console.log('wine objs: mysql then db');
-    console.dir(app.mysql.Wine);
-    console.dir(app.db.models.Wine);
+    console.dir(req.app.mysql.Wine);
+    console.dir(req.app.db.models.Wine);
     console.log('1');
 
     req.app.db.models.Wine.pagedFind({
