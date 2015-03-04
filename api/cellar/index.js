@@ -30,15 +30,11 @@ exports.find = function(req, res, next){
       filters['status.id'] = req.query.status;
     }
 
-    console.log('wine objs: mysql then db');
-    //console.dir(req.app.mysql.Wine);
-    console.dir(req.app.db.models.Wine);
     console.log('1');
 
     req.app.db.models.Wine.findAll({
         where: { createdBy: req.user.id },
-        attributes: ['id', 'grape', 'estate', 'name', 'year', 'rating', 'pairing'], 
-        //include: [{model: Item, attributes: ['tripId']}]  //Need to do multiple queries because this isnt available yet! 1.7 or 2.0
+        attributes: ['id', 'grape', 'estate', 'name', 'year', 'rating', 'pairing']
      })
     .error(function(err) {
       // error callback
@@ -46,8 +42,9 @@ exports.find = function(req, res, next){
     })
     .success(function(items) {
         console.log('Items returned.');
-        results.items = items;
-        //callback(null, 'two');
+        console.dir(items);
+        
+
    
     });
 
