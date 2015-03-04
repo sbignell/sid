@@ -31,24 +31,24 @@ exports.find = function(req, res, next){
     }
 
     console.log('wine objs: mysql then db');
-    console.dir(req.app.mysql.Wine);
+    //console.dir(req.app.mysql.Wine);
     console.dir(req.app.db.models.Wine);
     console.log('1');
 
-    req.app.db.models.Wine.pagedFind({
-      filters: filters,
-      keys: 'id grape estate name year notes pairing rating',
-      limit: req.query.limit,
-      page: req.query.page,
-      sort: req.query.sort
-    }, function(err, results) {
-      console.log('2');
-      if (err) {
-        return callback(err, null);
-      }
-
-      outcome.results = results;
-      return callback(null, 'done');
+    req.app.db.models.Wine.findAll({
+        where: { createdBy: req.user.id },
+        attributes: ['id', 'grape', 'estate', 'name', 'year', 'rating', 'pairing'], 
+        //include: [{model: Item, attributes: ['tripId']}]  //Need to do multiple queries because this isnt available yet! 1.7 or 2.0
+     })
+    .error(function(err) {
+      // error callback
+      console.log('Couldnt find items: ' + err);
+    })
+    .success(function(items) {
+        console.log('Items returned.');
+        results.items = items;
+        //callback(null, 'two');
+   
     });
 
     console.log('3');
