@@ -49,7 +49,7 @@ app.db.once('open', function () {
 require('./nosql-models')(app, mongoose);
 
 //config relational (mysql) data models
-app.set('mysql', require('./rdbms-models'));
+app.set('mysql', require('./rdbms-models')(config));
 
 //settings
 app.disable('x-powered-by');
