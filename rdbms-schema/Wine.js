@@ -15,6 +15,6 @@ exports = module.exports = function(app, sequelize) {
   });
  
   //return Wine;
-  app.db.model('Wine', Wine);
+  return Wine;
 
 };

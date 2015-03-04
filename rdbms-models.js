@@ -15,7 +15,7 @@ exports = module.exports = function(app, sequelize) {
 
 
 
-  require(sequelize.import(__dirname + '/rdbms-schema/Wine')(app, sequelize));
+  app.mysql['Wine'] = sequelize.import(__dirname + '/rdbms-schema/Wine');
 
 };
 
