@@ -7,7 +7,7 @@ var config = require('./config'),
     bodyParser = require('body-parser'),
     session = require('express-session'),
     mongoStore = require('connect-mongo')(session),
-    sequelize = require('sequelize'),
+    Sequelize = require('sequelize'),
     //fs = require('fs'),
     //log = require('log'),
     //mysql = require('mysql'),
@@ -44,6 +44,13 @@ app.db.on('error', console.error.bind(console, 'mongoose connection error: '));
 app.db.once('open', function () {
   //and... we have a data store
 });
+
+//setup sequelize
+var sequelize = new Sequelize(config.mysql.db, config.mysql.username, config.mysql.password, {
+    dialect: 'mysql', // or 'sqlite', 'postgres', 'mariadb'
+    host: config.mysql.host,
+    port: config.mysql.port
+  });
 
 //config nosql (mongodb) data models
 require('./nosql-models')(app, mongoose);

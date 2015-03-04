@@ -2,7 +2,20 @@
 
 exports = module.exports = function(app, sequelize) {
 
-  require('./rdbms-schema/Wine')(app, sequelize);
+  sequelize
+  .authenticate()
+  .complete(function(err) {
+    if (!!err) {
+      console.log('Sequelize_MySQL: Unable to connect to the database. ' + err);
+    } else {
+      console.log('Sequelize_MySQL: Connection has been established successfully.');
+    }
+  });
+
+
+
+
+  require(sequelize.import('./rdbms-schema/Wine'))(app, sequelize);
 
 };
 
