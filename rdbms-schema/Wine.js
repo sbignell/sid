@@ -2,6 +2,7 @@
 
 exports = module.exports = function(sequelize, DataTypes) {
   var Wine = sequelize.define('Wine', { 
+    id: { type: String, default: '' },
     grape: { type: String, default: '' },
     estate: { type: String, default: '' },
     name: { type: String, default: '' },
@@ -10,8 +11,7 @@ exports = module.exports = function(sequelize, DataTypes) {
     rating: { type: String, default: '' },
     year: { type: String, default: '' },
     createdAt: { type: Date, default: Date.now },
-    createdBy: { type: String, default: '' },
-    updatedAt: { type: Date, default: Date.now }
+    createdBy: { type: String, default: '' }
   });
  
   return Wine;

@@ -30,6 +30,9 @@ exports.find = function(req, res, next){
       filters['status.id'] = req.query.status;
     }
 
+    console.log('rdb is: ');
+    console.dir(req.app.rdb);
+
     req.app.db.models.Account.pagedFind({
       filters: filters,
       keys: 'name company phone zip userCreated status',

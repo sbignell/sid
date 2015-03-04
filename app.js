@@ -57,7 +57,7 @@ var sequelize = new Sequelize(config.mysql.db, config.mysql.username, config.mys
 console.log('mysql connected');
 
 //config relational (mysql) data models
-app.set('rdbms-models', require('./rdbms-models')(sequelize));
+app.set('rdb', require('./rdbms-models')(sequelize));
 console.log('mysql models loaded');
 
 //settings
