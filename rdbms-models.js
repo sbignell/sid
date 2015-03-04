@@ -12,10 +12,12 @@ exports = module.exports = function(app, sequelize) {
     }
   });
 
+  app.mysql = {};
 
 
 
-  app.mysql['Wine'] = sequelize.import(__dirname + '/rdbms-schema/Wine');
+  app.mysql.Wine = sequelize.import(__dirname + '/rdbms-schema/Wine');
+  app.db.models.Wine = app.mysql.Wine;
 
 };
 

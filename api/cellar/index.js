@@ -30,6 +30,9 @@ exports.find = function(req, res, next){
       filters['status.id'] = req.query.status;
     }]
 
+    console.log('wine objs: mysql then db');
+    console.dir(app.mysql.Wine);
+    console.dir(app.db.models.Wine);
     console.log('1');
 
     req.app.db.models.Wine.pagedFind({
