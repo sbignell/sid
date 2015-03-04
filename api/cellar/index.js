@@ -28,7 +28,7 @@ exports.find = function(req, res, next){
 
     if (req.query.status) {
       filters['status.id'] = req.query.status;
-    }]
+    }
 
     console.log('wine objs: mysql then db');
     console.dir(app.mysql.Wine);
