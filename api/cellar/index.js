@@ -31,21 +31,28 @@ exports.find = function(req, res, next){
     }
 
     console.log('database is: ');
-    console.dir(req.app.get('mysql').Wine);
-    //var wine = req.app.get('mysql').Wine;
+    
+    var wine = req.app.get('mysql').Wine;
 
-    /*wine.findAll({
+    console.log('1');
+
+
+    wine.findAll({
         where: { createdBy: req.user.id },
         attributes: ['id', 'grape', 'estate', 'name', 'notes', 'pairing', 'rating', 'year'],
      })
     .error(function(err) {
       // error callback
+      console.log('2');
       console.log('Couldnt find wines: ' + err);
     })
     .success(function(wines) {
+        console.log('3');
         console.log('Wines returned.');
         console.dir(wines);   
-    });*/
+    });
+
+    console.log('4');
 
     req.app.db.models.Account.pagedFind({
       filters: filters,
