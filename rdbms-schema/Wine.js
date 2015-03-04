@@ -1,6 +1,6 @@
 'use strict';
 
-exports = module.exports = function(app, sequelize) {
+exports = module.exports = function(sequelize, DataTypes) {
   var Wine = sequelize.define('Wine', { 
     id: { type: String, default: '' },
     grape: { type: String, default: '' },
