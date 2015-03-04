@@ -56,7 +56,7 @@ var sequelize = new Sequelize(config.mysql.db, config.mysql.username, config.mys
   });
 
 //config relational (mysql) data models
-app.set('rdb', require('./rdbms-models')(sequelize));
+app.set('mysql', require('./rdbms-models')(sequelize));
 
 //settings
 app.disable('x-powered-by');

@@ -30,8 +30,22 @@ exports.find = function(req, res, next){
       filters['status.id'] = req.query.status;
     }
 
-    console.log('rdb is: ');
-    console.dir(req.app.rdb);
+    console.log('database is: ');
+    console.dir(req.app.get('mysql').Wine);
+    var wine = req.app.get('mysql').Wine;
+
+    wine.findAll({
+        where: { createdBy: req.user.id },
+        attributes: ['id', 'grape', 'estate', 'name', 'notes', 'pairing', 'rating', 'year'],
+     })
+    .error(function(err) {
+      // error callback
+      console.log('Couldnt find wines: ' + err);
+    })
+    .success(function(wines) {
+        console.log('Wines returned.');
+        console.dir(wines);   
+    });
 
     req.app.db.models.Account.pagedFind({
       filters: filters,
