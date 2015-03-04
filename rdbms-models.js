@@ -15,7 +15,7 @@ exports = module.exports = function(sequelize) {
 
   // load models
   var models = [
-    'Person',
+    'Wine',
     'Trip',
     'Location',
     'Flight'
