@@ -32,7 +32,7 @@ exports.find = function(req, res, next){
 
     console.log('database is: ');
     console.dir(req.app.get('mysql').Wine);
-    var wine = req.app.get('mysql').Wine;
+    //var wine = req.app.get('mysql').Wine;
 
     /*wine.findAll({
         where: { createdBy: req.user.id },
