@@ -31,11 +31,11 @@ exports.smtp = {
   }
 };
 exports.mysql = {
-  host: 'localhost', //process.env.MYSQL_HOST,
-  port: '3306', //process.env.MYSQL_PORT,
-  db: 'simon', //process.env.DB,
-  username: 'user', //process.env.MYSQL_USERNAME,
-  password: 'pass' //process.env.MYSQL_PASSWORD
+  host: process.env.MYSQL_HOST, //process.env.MYSQL_HOST,
+  port: process.env.MYSQL_PORT, //process.env.MYSQL_PORT,
+  db: 'ss', //process.env.DB,
+  username: process.env.MYSQL_USER, //process.env.MYSQL_USERNAME,
+  password: process.env.MYSQL_PASS //process.env.MYSQL_PASSWORD
 };
 exports.oauth = {
   twitter: {
