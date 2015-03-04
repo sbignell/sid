@@ -34,7 +34,7 @@ exports.find = function(req, res, next){
     console.dir(req.app.get('mysql').Wine);
     var wine = req.app.get('mysql').Wine;
 
-    wine.findAll({
+    /*wine.findAll({
         where: { createdBy: req.user.id },
         attributes: ['id', 'grape', 'estate', 'name', 'notes', 'pairing', 'rating', 'year'],
      })
@@ -45,7 +45,7 @@ exports.find = function(req, res, next){
     .success(function(wines) {
         console.log('Wines returned.');
         console.dir(wines);   
-    });
+    });*/
 
     req.app.db.models.Account.pagedFind({
       filters: filters,
