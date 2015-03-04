@@ -33,8 +33,8 @@ exports.find = function(req, res, next){
     console.log('1');
 
     req.app.db.models.Wine.findAll({
-        where: { createdBy: req.user.id },
-        attributes: ['id', 'grape', 'estate', 'name', 'year', 'rating', 'pairing']
+        //where: { createdBy: req.user.id },
+        attributes: ['id', 'grape', 'estate', 'name', 'year', 'rating', 'pairing', 'createdBy']
      })
     .error(function(err) {
       // error callback
