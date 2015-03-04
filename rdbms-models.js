@@ -1,7 +1,12 @@
 'use strict';
 
-var Sequelize = require('sequelize');
+exports = module.exports = function(app, sequelize) {
 
+  require('./rdbms-schema/Wine')(app, sequelize);
+
+};
+
+/*
 // create mysql ORM object
 var sequelize = new Sequelize(config.mysql.db, config.mysql.username, config.mysql.password, {
     dialect: 'mysql', // or 'sqlite', 'postgres', 'mariadb'
@@ -31,7 +36,7 @@ models.forEach(function(model) {
   module.exports[model] = sequelize.import(__dirname + '/rdbms-schema/' + model);
 });
 
-
+*/
 
   // describe relationships
   /*(function(m) {
@@ -40,4 +45,5 @@ models.forEach(function(model) {
   })(module.exports);*/
 
   // export connection
-module.exports.sequelize = sequelize;
+  
+//module.exports.sequelize = sequelize;

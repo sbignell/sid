@@ -28,31 +28,27 @@ exports.find = function(req, res, next){
 
     if (req.query.status) {
       filters['status.id'] = req.query.status;
-    }
-
-    console.log('database is: ');
-    
-    var wine = req.app.get('mysql').Wine;
+    }]
 
     console.log('1');
 
-
-    wine.findAll({
-        where: { createdBy: req.user.id },
-        attributes: ['id', 'grape', 'estate', 'name', 'notes', 'pairing', 'rating', 'year'],
-     })
-    .error(function(err) {
-      // error callback
+    req.app.db.models.Wine.pagedFind({
+      filters: filters,
+      keys: 'id grape estate name year notes pairing rating',
+      limit: req.query.limit,
+      page: req.query.page,
+      sort: req.query.sort
+    }, function(err, results) {
       console.log('2');
-      console.log('Couldnt find wines: ' + err);
-    })
-    .success(function(wines) {
-        console.log('3');
-        console.log('Wines returned.');
-        console.dir(wines);   
+      if (err) {
+        return callback(err, null);
+      }
+
+      outcome.results = results;
+      return callback(null, 'done');
     });
 
-    console.log('4');
+    console.log('3');
 
     req.app.db.models.Account.pagedFind({
       filters: filters,

@@ -7,7 +7,7 @@ var config = require('./config'),
     bodyParser = require('body-parser'),
     session = require('express-session'),
     mongoStore = require('connect-mongo')(session),
-    //Sequelize = require('sequelize'),
+    sequelize = require('sequelize'),
     //fs = require('fs'),
     //log = require('log'),
     //mysql = require('mysql'),
@@ -49,7 +49,7 @@ app.db.once('open', function () {
 require('./nosql-models')(app, mongoose);
 
 //config relational (mysql) data models
-app.set('mysql', require('./rdbms-models')(config));
+require('./rdbms-models')(app, sequelize);
 
 //settings
 app.disable('x-powered-by');

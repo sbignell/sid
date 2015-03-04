@@ -14,6 +14,7 @@ exports = module.exports = function(sequelize, DataTypes) {
     createdBy: { type: String, default: '' }
   });
  
-  return Wine;
+  //return Wine;
+  app.db.model('Wine', Wine);
 
 };
