@@ -5,7 +5,7 @@ exports.find = function(req, res, next){
 
   req.app.db.models.Wine.findAll({
       where: { createdBy: req.user.id },
-      attributes: ['id', 'grape', 'estate', 'name', 'year', 'rating', 'pairing', 'createdBy']
+      attributes: ['id', 'grape', 'estate', 'name', 'notes', 'rating', 'createdBy']
    })
   .error(function(err) {
     // error callback

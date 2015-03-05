@@ -7,9 +7,7 @@ exports = module.exports = function(sequelize, DataTypes) {
     estate: { type: String, default: '' },
     name: { type: String, default: '' },
     notes: { type: String, default: '' },
-    pairing: { type: String, default: '' },
     rating: { type: String, default: '' },
-    year: { type: String, default: '' },
     createdAt: { type: Date, default: Date.now },
     createdBy: { type: String, default: '' }
   });
