@@ -16,7 +16,7 @@ exports.find = function(req, res, next){
       //console.log('Items returned.');
       //console.dir(items);
       
-      outcome.results = items;
+      outcome.results = JSON.stringify(items);
 
       if (req.xhr) {
 
