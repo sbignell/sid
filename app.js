@@ -52,6 +52,7 @@ var sequelize = new Sequelize(config.mysql.db, config.mysql.username, config.mys
     port: config.mysql.port
   });
 
+//connect to mysql
 sequelize
 .authenticate()
 .complete(function(err) {

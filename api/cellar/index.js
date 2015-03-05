@@ -3,39 +3,33 @@
 exports.find = function(req, res, next){
   var outcome = {};
 
+  req.app.db.models.Wine.findAll({
+      where: { createdBy: req.user.id },
+      attributes: ['id', 'grape', 'estate', 'name', 'year', 'rating', 'pairing', 'createdBy']
+   })
+  .error(function(err) {
+    // error callback
+    console.log('Couldnt find items: ' + err);
+    return next(err);
+  })
+  .success(function(items) {
+      //console.log('Items returned.');
+      //console.dir(items);
+      
+      outcome.results = items;
 
+      if (req.xhr) {
 
-    console.log('1');
-
-    req.app.db.models.Wine.findAll({
-        where: { createdBy: req.user.id },
-        attributes: ['id', 'grape', 'estate', 'name', 'year', 'rating', 'pairing', 'createdBy']
-     })
-    .error(function(err) {
-      // error callback
-      console.log('Couldnt find items: ' + err);
-      return next(err);
-    })
-    .success(function(items) {
-        console.log('Items returned.');
-        console.dir(items);
-        
-        outcome.results = items;
-        console.log('3');
-
-        if (req.xhr) {
-
-          res.header('Cache-Control', 'no-cache, no-store, must-revalidate');
-          outcome.results.filters = req.query;
-          console.log('sending xhr: ');
-          console.dir(outcome.results);
-          res.send(outcome.results);
-        }
-        else {
-          //?
-        }
-   
-    });
+        res.header('Cache-Control', 'no-cache, no-store, must-revalidate');
+        console.log('sending xhr: ');
+        console.dir(outcome.results);
+        res.send(outcome.results);
+      }
+      else {
+        //?
+      }
+ 
+  });
 
 };
 
