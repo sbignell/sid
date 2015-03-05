@@ -21,30 +21,22 @@ exports.find = function(req, res, next){
         console.dir(items);
         
         outcome.results = items;
+        console.log('3');
+
+        if (req.xhr) {
+
+          res.header('Cache-Control', 'no-cache, no-store, must-revalidate');
+          outcome.results.filters = req.query;
+          console.log('sending xhr: ');
+          console.dir(outcome.results);
+          res.send(outcome.results);
+        }
+        else {
+          //?
+        }
    
     });
 
-    console.log('3');
-
-    
-    if (err) {
-      
-    }
-
-    if (req.xhr) {
-
-      res.header('Cache-Control', 'no-cache, no-store, must-revalidate');
-      outcome.results.filters = req.query;
-      console.log('sending xhr: ');
-      console.dir(outcome.results);
-      res.send(outcome.results);
-    }
-    else {
-      //?
-    }
-  
-
- 
 };
 
 exports.read = function(req, res, next){
