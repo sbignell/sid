@@ -113,6 +113,7 @@ exports.create = function(req, res, next){
       .success(function(newWine) {
         // success callback
         console.log('Saved new wine: ' + newWine.id);
+        console.dir(newWine);
         workflow.outcome.record = newWine;
         return workflow.emit('response');
       });
