@@ -100,7 +100,7 @@ exports.create = function(req, res, next){
       name: req.body.name,
       notes: req.body.notes,
       rating: req.body.rating,
-      createdBy: req.user.username
+      createdBy: req.user.id
     });
     
     // persist an instance
