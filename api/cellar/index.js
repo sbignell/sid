@@ -93,13 +93,15 @@ exports.create = function(req, res, next){
 
   workflow.on('createWine', function() {
 
+    console.dir(req.user);
+
     var wine = req.app.db.models.Wine.build({
       grape: req.body.grape,
       estate: req.body.estate,
       name: req.body.name,
       notes: req.body.notes,
       rating: req.body.rating,
-      createdBy: req.user._id
+      createdBy: req.user.id
     });
     
     // persist an instance
