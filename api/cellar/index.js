@@ -93,24 +93,29 @@ exports.create = function(req, res, next){
 
   workflow.on('createWine', function() {
 
-    var fieldsToSet = {
+    var wine = req.app.db.models.Wine.build({
       grape: req.body.grape,
       estate: req.body.estate,
       name: req.body.name,
       notes: req.body.notes,
       rating: req.body.rating,
       createdBy: req.user._id
-    };
-    
-
-    req.app.db.models.Wine.create(fieldsToSet, function(err, wine) {
-      if (err) {
-        return workflow.emit('exception', err);
-      }
-
-      workflow.outcome.record = wine;
-      return workflow.emit('response');
     });
+    
+    // persist an instance
+    wine.save()
+      .error(function(err) {
+        // error callback
+        console.log('Couldnt save it: ' + err);
+        return workflow.emit('exception', err);
+      })
+      .success(function(newWine) {
+        // success callback
+        console.log('Saved new wine: ' + newWine.id);
+        workflow.outcome.record = newWine;
+        return workflow.emit('response');
+      });
+
   });
 
   workflow.emit('validate');
