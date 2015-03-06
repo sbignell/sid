@@ -168,6 +168,7 @@ exports = module.exports = function(app, passport) {
 
   app.get('/cellar/', require('./api/cellar/index').find);
   app.post('/cellar/', require('./api/cellar/index').create);
+  app.delete('/cellar/:id', require('./api/cellar/index').delete);
 
   //route not found
   app.all('*', require('./api/http/index').http404);
