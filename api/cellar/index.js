@@ -83,41 +83,32 @@ exports.create = function(req, res, next){
   var workflow = req.app.utility.workflow(req, res);
 
   workflow.on('validate', function() {
-    if (!req.body['name.full']) {
+    /*if (!req.body['name.full']) {
       workflow.outcome.errors.push('Please enter a name.');
       return workflow.emit('response');
-    }
+    }*/
 
-    workflow.emit('createAccount');
+    workflow.emit('createWine');
   });
 
-  workflow.on('createAccount', function() {
-    var nameParts = req.body['name.full'].trim().split(/\s/);
-    var fieldsToSet = {
-      name: {
-        first: nameParts.shift(),
-        middle: (nameParts.length > 1 ? nameParts.shift() : ''),
-        last: (nameParts.length === 0 ? '' : nameParts.join(' ')),
-      },
-      userCreated: {
-        id: req.user._id,
-        name: req.user.username,
-        time: new Date().toISOString()
-      }
-    };
-    fieldsToSet.name.full = fieldsToSet.name.first + (fieldsToSet.name.last ? ' '+ fieldsToSet.name.last : '');
-    fieldsToSet.search = [
-      fieldsToSet.name.first,
-      fieldsToSet.name.middle,
-      fieldsToSet.name.last
-    ];
+  workflow.on('createWine', function() {
 
-    req.app.db.models.Account.create(fieldsToSet, function(err, account) {
+    var fieldsToSet = {
+      grape: req.body.grape,
+      estate: req.body.estate,
+      name: req.body.name,
+      notes: req.body.notes,
+      rating: req.body.rating,
+      createdBy: req.user._id
+    };
+    
+
+    req.app.db.models.Wine.create(fieldsToSet, function(err, wine) {
       if (err) {
         return workflow.emit('exception', err);
       }
 
-      workflow.outcome.record = account;
+      workflow.outcome.record = wine;
       return workflow.emit('response');
     });
   });
