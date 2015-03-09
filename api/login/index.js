@@ -29,7 +29,7 @@ exports.check = function(req, res){
 
   if(req.isAuthenticated()){
     console.dir(req.user);
-    return req.user;
+    res.send(req.user);
   } else {
     console.dir('not logged in');
     return '{error: not logged in}';
