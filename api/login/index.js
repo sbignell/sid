@@ -25,6 +25,18 @@ exports.init = function(req, res){
   }
 };
 
+exports.check = function(req, res){
+
+  if(req.isAuthenticated()){
+    console.dir(req.user);
+    return req.user;
+  } else {
+    console.dir('not logged in');
+    return '{error: not logged in}';
+  } 
+
+};
+
 exports.login = function(req, res){
   var workflow = req.app.utility.workflow(req, res);
 

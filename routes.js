@@ -55,6 +55,9 @@ exports = module.exports = function(app, passport) {
   app.put('/api/v1/login/reset/:email/:token/', require('./api/login/reset/index').set);
   app.get('/logout/', require('./api/logout/index').init);
 
+  //Check if logged in and get user object
+  app.post('/api/v1/user/', require('./api/login/index').check);
+
   //social login
   app.get('/login/twitter/', passport.authenticate('twitter', { callbackURL: '/login/twitter/callback/' }));
   app.get('/login/twitter/callback/', require('./api/login/index').loginTwitter);
