@@ -4,6 +4,7 @@ function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
     return next();
   }
+  console.log('ensureAuthenticated: false');
   res.set('X-Auth-Required', 'true');
   req.session.returnUrl = req.originalUrl;
   res.redirect('/login/');
@@ -13,6 +14,7 @@ function ensureAdmin(req, res, next) {
   if (req.user.canPlayRoleOf('admin')) {
     return next();
   }
+  console.log('ensureAdmin: false');
   res.redirect('/');
 }
 
@@ -25,6 +27,7 @@ function ensureAccount(req, res, next) {
     }
     return next();
   }
+  console.log('ensureAccount: false');
   res.redirect('/');
 }
 

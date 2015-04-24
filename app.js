@@ -63,11 +63,15 @@ sequelize
   }
 });
 
+
+
 //config nosql (mongodb) data models
 require('./nosql-models')(app, mongoose);
 
 //config relational (mysql) data models
 require('./rdbms-models')(app, sequelize);
+
+
 
 //settings
 app.disable('x-powered-by');
