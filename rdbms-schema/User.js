@@ -51,7 +51,7 @@ exports = module.exports = function(sequelize, DataTypes) {
 
     return returnUrl;
   };*/
-  User.statics.encryptPassword = function(password, done) {
+  User.encryptPassword = function(password, done) {
     var bcrypt = require('bcrypt');
     bcrypt.genSalt(10, function(err, salt) {
       if (err) {
@@ -63,7 +63,7 @@ exports = module.exports = function(sequelize, DataTypes) {
       });
     });
   };
-  User.statics.validatePassword = function(password, hash, done) {
+  User.validatePassword = function(password, hash, done) {
     var bcrypt = require('bcrypt');
     bcrypt.compare(password, hash, function(err, res) {
       done(err, res);
