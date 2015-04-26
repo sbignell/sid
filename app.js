@@ -46,11 +46,15 @@ app.db.once('open', function () {
 });
 
 //setup sequelize
-var sequelize = new Sequelize(config.mysql.db, config.mysql.username, config.mysql.password, {
+/*var sequelize = new Sequelize(config.mysql.db, config.mysql.username, config.mysql.password, {
     dialect: 'mysql', // or 'sqlite', 'postgres', 'mariadb'
     host: config.mysql.host,
     port: config.mysql.port
-  });
+  });*/
+var sqlstring = 'mysql://' + config.mysql.username + ':' + config.mysql.password + '@' + config.mysql.host + ':' + config.mysql.port + '/' + config.mysql.db;
+console.log(sqlstring);
+
+var sequelize = new Sequelize(sqlstring);
 
 //connect to mysql
 sequelize
