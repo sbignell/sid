@@ -22,11 +22,11 @@ exports = module.exports = function(sequelize, DataTypes) {
     createdTime: { type: Date, default: Date.now },
     resetPasswordToken: String,
     resetPasswordExpires: Date,
-    twitter: {},
-    github: {},
-    facebook: {},
-    google: {},
-    tumblr: {}
+    twitter: { type: String, default: '' },
+    github: { type: String, default: '' },
+    facebook: { type: String, default: '' },
+    google: { type: String, default: '' },
+    tumblr: { type: String, default: '' }
   });
   /*User.methods.canPlayRoleOf = function(role) {
     if (role === "admin" && this.adminrole) {
