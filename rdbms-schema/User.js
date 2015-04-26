@@ -6,27 +6,34 @@ exports = module.exports = function(sequelize, DataTypes) {
     username: { type: String, unique: true },
     password: String,
     email: { type: String }, //, unique: true },
-    roles: {
-      admin: { type: mongoose.Schema.Types.ObjectId, ref: 'Admin' },
-      account: { type: mongoose.Schema.Types.ObjectId, ref: 'Account' }
-    },
     isActive: String,
-    timeCreated: { type: Date, default: Date.now },
+    isVerified: { type: String, default: '' },
+    verificationToken: { type: String, default: '' },
+    firstname: { type: String, default: '' },
+    middlename: { type: String, default: '' },
+    lastname: { type: String, default: '' },
+    fullname: { type: String, default: '' },
+    company: { type: String, default: '' },
+    phone: { type: String, default: '' },
+    zip: { type: String, default: '' },
+    status: { type: String, default: '' },
+    createdById: { type: String, default: '' },
+    createdByName: { type: String, default: '' },
+    createdTime: { type: Date, default: Date.now },
     resetPasswordToken: String,
     resetPasswordExpires: Date,
     twitter: {},
     github: {},
     facebook: {},
     google: {},
-    tumblr: {},
-    search: [String]
+    tumblr: {}
   });
-  User.methods.canPlayRoleOf = function(role) {
-    if (role === "admin" && this.roles.admin) {
+  /*User.methods.canPlayRoleOf = function(role) {
+    if (role === "admin" && this.adminrole) {
       return true;
     }
 
-    if (role === "account" && this.roles.account) {
+    if (role === "account" && this.accountrole) {
       return true;
     }
 
@@ -43,7 +50,7 @@ exports = module.exports = function(sequelize, DataTypes) {
     }
 
     return returnUrl;
-  };
+  };*/
   User.statics.encryptPassword = function(password, done) {
     var bcrypt = require('bcrypt');
     bcrypt.genSalt(10, function(err, salt) {
