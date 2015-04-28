@@ -18,6 +18,7 @@ exports = module.exports = function(app, passport) {
         conditions.email = username.toLowerCase();
       }
 
+      //mongo
       app.db.models.User.findOne(conditions, function(err, user) {
         if (err) {
           return done(err);
@@ -39,6 +40,10 @@ exports = module.exports = function(app, passport) {
           return done(null, user);
         });
       });
+
+      //mysql
+      
+
     }
   ));
 
@@ -123,6 +128,7 @@ exports = module.exports = function(app, passport) {
   });
 
   passport.deserializeUser(function(id, done) {
+    //mongo
     app.db.models.User.findOne({ _id: id }).populate('roles.admin').populate('roles.account').exec(function(err, user) {
       if (user && user.roles && user.roles.admin) {
         user.roles.admin.populate("groups", function(err, admin) {
@@ -133,5 +139,9 @@ exports = module.exports = function(app, passport) {
         done(err, user);
       }
     });
+
+    //mysql
+
+
   });
 };

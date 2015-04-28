@@ -1,7 +1,7 @@
-Simon
+Sid
 =============
 
-Simon is a server.
+Sid is a server.
 
 A website and user system for Node.js. What you create with Drywall is more important than Drywall. [See a bird's eye view.](http://jedireza.github.io/drywall/)
 
