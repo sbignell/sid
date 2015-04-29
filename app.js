@@ -65,7 +65,7 @@ sequelize
 
 
 //config nosql (mongodb) data models
-require('./nosql-models')(app, mongoose);
+//require('./nosql-models')(app, mongoose);
 
 //config relational (mysql) data models
 require('./rdbms-models')(app, sequelize);

@@ -8,7 +8,9 @@ exports = module.exports = function(sequelize, DataTypes) {
     name: { type: String, default: '' },
     notes: { type: String, default: '' },
     rating: { type: String, default: '' },
-    createdBy: { type: String, default: '' }
+    createdById: { type: String, default: '' },
+    createdByName: { type: String, default: '' },
+    createdTime: { type: Date, default: Date.now }
   });
  
   //return Wine;

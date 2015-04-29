@@ -47,7 +47,7 @@ exports.signup = function(req, res){
   });
 
   workflow.on('duplicateUsernameCheck', function() {
-    req.app.db.models.User.findOne({ username: req.body.username }, function(err, user) {
+    req.app.db.models.User.find({ where: { username: req.body.username } }, function(err, user) {
       if (err) {
         return workflow.emit('exception', err);
       }
@@ -103,7 +103,9 @@ exports.signup = function(req, res){
     });
   });
 
-  workflow.on('createAccount', function() {
+  //create a user<->account role record
+
+  /*workflow.on('createAccount', function() {
     var fieldsToSet = {
       isVerified: req.app.config.requireAccountVerification ? 'no' : 'yes',
       'name.full': workflow.user.username,
@@ -131,7 +133,7 @@ exports.signup = function(req, res){
         workflow.emit('sendWelcomeEmail');
       });
     });
-  });
+  });*/
 
   workflow.on('sendWelcomeEmail', function() {
     req.app.utility.sendmail(req, res, {

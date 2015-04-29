@@ -18,7 +18,8 @@ exports = module.exports = function(app, passport) {
         conditions.email = username.toLowerCase();
       }
 
-      app.db.models.User.findOne(conditions, function(err, user) {
+      //mongo
+      /*app.db.models.User.findOne(conditions, function(err, user) {
         if (err) {
           return done(err);
         }
@@ -38,7 +39,39 @@ exports = module.exports = function(app, passport) {
 
           return done(null, user);
         });
+      });*/
+
+      //mysql
+      req.app.db.models.User.find({
+          where: conditions
+       })
+      .error(function(err) {
+        // error callback
+        console.log('Couldnt find user: ' + err);
+        return done(err);
+      })
+      .success(function(user) {
+          console.log('User returned.');
+          console.dir(user);
+
+          if (!user) {
+            return done(null, false, { message: 'Unknown user' });
+          }
+          
+          app.db.models.User.validatePassword(password, user.password, function(err, isValid) {
+            if (err) {
+              return done(err);
+            }
+
+            if (!isValid) {
+              return done(null, false, { message: 'Invalid password' });
+            }
+
+            return done(null, user);
+          });
+
       });
+
     }
   ));
 
@@ -123,7 +156,8 @@ exports = module.exports = function(app, passport) {
   });
 
   passport.deserializeUser(function(id, done) {
-    app.db.models.User.findOne({ _id: id }).populate('roles.admin').populate('roles.account').exec(function(err, user) {
+    //mongo
+    /*app.db.models.User.findOne({ _id: id }).populate('roles.admin').populate('roles.account').exec(function(err, user) {
       if (user && user.roles && user.roles.admin) {
         user.roles.admin.populate("groups", function(err, admin) {
           done(err, user);
@@ -132,6 +166,20 @@ exports = module.exports = function(app, passport) {
       else {
         done(err, user);
       }
+    });*/
+
+    //mysql
+    req.app.db.models.User.find({
+        where: {id: id} 
+     })
+    .then(function(err, user) {
+        console.log('User deserialized.');
+        console.dir(user);
+
+        done(err, user);
+
     });
+
+
   });
 };
