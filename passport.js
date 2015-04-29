@@ -19,11 +19,8 @@ exports = module.exports = function(app, passport) {
       }
 
       //mongo
-<<<<<<< HEAD
       /*app.db.models.User.findOne(conditions, function(err, user) {
-=======
-      app.db.models.User.findOne(conditions, function(err, user) {
->>>>>>> 403edd2b31a64e65614a214346d8b55bfc60783a
+
         if (err) {
           return done(err);
         }
@@ -76,12 +73,6 @@ exports = module.exports = function(app, passport) {
 
       });
 
-<<<<<<< HEAD
-=======
-      //mysql
-      
-
->>>>>>> 403edd2b31a64e65614a214346d8b55bfc60783a
     }
   ));
 
@@ -167,11 +158,8 @@ exports = module.exports = function(app, passport) {
 
   passport.deserializeUser(function(id, done) {
     //mongo
-<<<<<<< HEAD
     /*app.db.models.User.findOne({ _id: id }).populate('roles.admin').populate('roles.account').exec(function(err, user) {
-=======
-    app.db.models.User.findOne({ _id: id }).populate('roles.admin').populate('roles.account').exec(function(err, user) {
->>>>>>> 403edd2b31a64e65614a214346d8b55bfc60783a
+
       if (user && user.roles && user.roles.admin) {
         user.roles.admin.populate("groups", function(err, admin) {
           done(err, user);
@@ -194,11 +182,6 @@ exports = module.exports = function(app, passport) {
 
     });
 
-<<<<<<< HEAD
-=======
-    //mysql
-
->>>>>>> 403edd2b31a64e65614a214346d8b55bfc60783a
 
   });
 };
