@@ -45,7 +45,28 @@ exports.send = function(req, res, next){
       resetPasswordToken: hash,
       resetPasswordExpires: Date.now() + 10000000
     };
-    req.app.db.models.User.findOneAndUpdate(conditions, fieldsToSet, function(err, user) {
+
+     req.app.db.models.User.find({
+          where: conditions
+       })
+      .error(function(err) {
+        // error callback
+        console.log('Couldnt find user: ' + err);
+        return workflow.emit('exception', err);
+      })
+      .success(function(user) {
+          console.log('User returned.');
+          console.dir(user);
+
+          if (!user) {
+            return workflow.emit('response');
+          }
+          
+           workflow.emit('sendEmail', token, user);
+
+      });
+    
+    /*req.app.db.models.User.findOneAndUpdate(conditions, fieldsToSet, function(err, user) {
       if (err) {
         return workflow.emit('exception', err);
       }
@@ -55,7 +76,7 @@ exports.send = function(req, res, next){
       }
 
       workflow.emit('sendEmail', token, user);
-    });
+    });*/
   });
 
   workflow.on('sendEmail', function(token, user) {
