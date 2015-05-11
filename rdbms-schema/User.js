@@ -20,13 +20,12 @@ exports = module.exports = function(sequelize, DataTypes) {
     createdById: { type: String, default: '' },
     createdByName: { type: String, default: '' },
     createdTime: { type: Date, default: Date.now },
-    resetPasswordToken: String,
-    resetPasswordExpires: Date,
-    twitter: { type: String, default: '' },
-    github: { type: String, default: '' },
-    facebook: { type: String, default: '' },
-    google: { type: String, default: '' },
-    tumblr: { type: String, default: '' }
+    twitterKey: { type: String, default: '' },
+    githubKey: { type: String, default: '' },
+    facebookKey: { type: String, default: '' },
+    googleKey: { type: String, default: '' },
+    tumblrKey: { type: String, default: '' },
+    deactivatedTime: { type: Date }
   });
   /*User.methods.canPlayRoleOf = function(role) {
     if (role === "admin" && this.adminrole) {
