@@ -16,7 +16,7 @@ exports = module.exports = function(sequelize, DataTypes) {
     company: { type: String, default: '' },
     phone: { type: String, default: '' },
     zip: { type: String, default: '' },
-    status: { type: String, default: '' },
+    //status: { type: String, default: '' },
     createdById: { type: String, default: '' },
     createdByName: { type: String, default: '' },
     createdTime: { type: Date, default: Date.now },
