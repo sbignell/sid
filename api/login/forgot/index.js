@@ -65,7 +65,7 @@ exports.send = function(req, res, next){
            workflow.emit('sendEmail', token, user);
 
       });
-    
+
     /*req.app.db.models.User.findOneAndUpdate(conditions, fieldsToSet, function(err, user) {
       if (err) {
         return workflow.emit('exception', err);
@@ -80,6 +80,7 @@ exports.send = function(req, res, next){
   });
 
   workflow.on('sendEmail', function(token, user) {
+    console.log('reached sendEmail');
     req.app.utility.sendmail(req, res, {
       from: req.app.config.smtp.from.name +' <'+ req.app.config.smtp.from.address +'>',
       to: user.email,
