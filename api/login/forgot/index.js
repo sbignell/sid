@@ -17,6 +17,7 @@ exports.send = function(req, res, next){
 
 
   workflow.on('validate', function() {
+    console.log('in validate');
     if (!req.body.email) {
       workflow.outcome.errfor.email = 'required';
       return workflow.emit('response');
@@ -25,9 +26,8 @@ exports.send = function(req, res, next){
     workflow.emit('generateToken');
   });
 
-/*
-
   workflow.on('generateToken', function() {
+    console.log('in generateToken');
     var crypto = require('crypto');
     crypto.randomBytes(21, function(err, buf) {
       if (err) {
@@ -122,7 +122,7 @@ exports.send = function(req, res, next){
         workflow.emit('response');
       }
     });
-  }); */
+  }); 
 
   workflow.emit('validate');
 
