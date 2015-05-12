@@ -1,7 +1,7 @@
 'use strict';
 
 exports = module.exports = function(sequelize, DataTypes) {
-  var Resetpassword = sequelize.define('Resetpassword', { 	
+  var ResetPassword = sequelize.define('ResetPassword', { 	
     userId: { type: Number },
     resetPasswordToken: { type: String, default: '' },
     resetPasswordExpires: { type: Number, default: '' },
@@ -11,5 +11,5 @@ exports = module.exports = function(sequelize, DataTypes) {
   });
   
 
-  return Resetpassword;
+  return ResetPassword;
 };
