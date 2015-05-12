@@ -11,6 +11,7 @@ exports.init = function(req, res){
 
 exports.send = function(req, res, next){
   var workflow = req.app.utility.workflow(req, res);
+  console.log('in login/forgot/index.send');
 
   workflow.on('validate', function() {
     if (!req.body.email) {
@@ -84,10 +85,12 @@ exports.send = function(req, res, next){
             .success(function(newResetPW) {
               // success callback
               console.log('Saved new ResetPW: ' + newResetPW.resetPasswordToken);
+
+              workflow.emit('sendEmail', token, user);
               
             });
           
-           workflow.emit('sendEmail', token, user);
+           
 
       });
 
