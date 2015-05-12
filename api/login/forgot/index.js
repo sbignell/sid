@@ -40,8 +40,9 @@ exports.send = function(req, res, next){
   });
 
   workflow.on('patchUser', function(token, hash) {
+    console.log('patchUser');
     var conditions = { email: req.body.email.toLowerCase() };
-    var fieldsToSet = {
+    var fieldsToSet = { 
       resetPasswordToken: hash,
       resetPasswordExpires: Date.now() + 10000000
     };
@@ -61,6 +62,29 @@ exports.send = function(req, res, next){
           if (!user) {
             return workflow.emit('response');
           }
+
+          var userId = user.id;
+
+          //create Resetpassword record
+          var resetPW = req.app.db.models.Resetpassword.build({
+            userId: userId, 
+            resetPasswordToken: fieldsToSet.resetPasswordToken, 
+            resetPasswordExpires: fieldsToSet.resetPasswordExpires,
+            isUsed: 'N',
+          });
+
+          // persist an instance
+          resetPW.save()
+            .error(function(err) {
+              // error callback
+              console.log('Couldnt save resetPassword: ' + err);
+              return workflow.emit('exception', err);
+            })
+            .success(function(newResetPW) {
+              // success callback
+              console.log('Saved new ResetPW: ' + newResetPW.resetPasswordToken);
+              
+            });
           
            workflow.emit('sendEmail', token, user);
 

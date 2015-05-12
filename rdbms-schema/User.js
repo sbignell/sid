@@ -6,7 +6,7 @@ exports = module.exports = function(sequelize, DataTypes) {
     username: { type: String, unique: true },
     password: String,
     email: { type: String }, //, unique: true },
-    isActive: String,
+    isActive: { type: String },
     isVerified: { type: String, default: '' },
     verificationToken: { type: String, default: '' },
     firstname: { type: String, default: '' },

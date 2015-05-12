@@ -11,6 +11,7 @@ exports = module.exports = function(app, sequelize) {
   app.db.models.LoginAttempt = sequelize.import(__dirname + '/rdbms-schema/LoginAttempt');
   app.db.models.Note = sequelize.import(__dirname + '/rdbms-schema/Note');
   app.db.models.Status = sequelize.import(__dirname + '/rdbms-schema/Status');
+  app.db.models.Resetpassword = sequelize.import(__dirname + '/rdbms-schema/Resetpassword');
   //app.db.models.StatusLog = sequelize.import(__dirname + '/rdbms-schema/StatusLog');
   
   
