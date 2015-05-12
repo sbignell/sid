@@ -11,6 +11,7 @@ exports.init = function(req, res){
 
 exports.send = function(req, res, next){
   console.log('in send');
+  res.render('login/forgot/index');
   /*var workflow = req.app.utility.workflow(req, res);
   console.log('in send');
 
