@@ -10,8 +10,9 @@ exports.init = function(req, res){
 };
 
 exports.send = function(req, res, next){
+  console.log('in send');
   var workflow = req.app.utility.workflow(req, res);
-  console.log('in login/forgot/index.send');
+  console.log('in send');
 
   workflow.on('validate', function() {
     if (!req.body.email) {
