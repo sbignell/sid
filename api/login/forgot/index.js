@@ -29,11 +29,12 @@ exports.send = function(req, res, next){
       }
 
       var token = buf.toString('hex');
+      console.log('before encryptPW');
       req.app.db.models.User.encryptPassword(token, function(err, hash) {
         if (err) {
           return next(err);
         }
-
+        console.log('after encryptPW');
         workflow.emit('patchUser', token, hash);
       });
     });
