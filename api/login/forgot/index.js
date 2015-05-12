@@ -23,6 +23,8 @@ exports.send = function(req, res, next){
     workflow.emit('generateToken');
   });
 
+  /*
+
   workflow.on('generateToken', function() {
     var crypto = require('crypto');
     crypto.randomBytes(21, function(err, buf) {
@@ -95,17 +97,6 @@ exports.send = function(req, res, next){
 
       });
 
-    /*req.app.db.models.User.findOneAndUpdate(conditions, fieldsToSet, function(err, user) {
-      if (err) {
-        return workflow.emit('exception', err);
-      }
-
-      if (!user) {
-        return workflow.emit('response');
-      }
-
-      workflow.emit('sendEmail', token, user);
-    });*/
   });
 
   workflow.on('sendEmail', function(token, user) {
@@ -129,7 +120,7 @@ exports.send = function(req, res, next){
         workflow.emit('response');
       }
     });
-  });
+  });*/
 
   workflow.emit('validate');
 };
