@@ -11,7 +11,7 @@ exports.init = function(req, res){
 
 exports.send = function(req, res, next){
   console.log('in send');
-  var workflow = req.app.utility.workflow(req, res);
+  /*var workflow = req.app.utility.workflow(req, res);
   console.log('in send');
 
   workflow.on('validate', function() {
@@ -23,7 +23,7 @@ exports.send = function(req, res, next){
     workflow.emit('generateToken');
   });
 
-  /*
+
 
   workflow.on('generateToken', function() {
     var crypto = require('crypto');
@@ -120,7 +120,7 @@ exports.send = function(req, res, next){
         workflow.emit('response');
       }
     });
-  });*/
+  });
 
-  workflow.emit('validate');
+  workflow.emit('validate');*/
 };
