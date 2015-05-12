@@ -67,13 +67,13 @@ exports.send = function(req, res, next){
           console.dir(user);
 
           if (!user) {
-            return workflow.emit('response');
+            return workflow.emit('exception', 'couldn\'t find user');
           }
 
           var userId = user.id;
 
           //create Resetpassword record
-          var resetPW = req.app.db.models.Resetpassword.build({
+          var resetPW = req.app.db.models.ResetPassword.build({
             userId: userId, 
             resetPasswordToken: fieldsToSet.resetPasswordToken, 
             resetPasswordExpires: fieldsToSet.resetPasswordExpires,
