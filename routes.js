@@ -52,7 +52,7 @@ exports = module.exports = function(app, passport) {
   //app.get('/login/', require('./api/login/index').init);
   app.post('/api/v1/login/', require('./api/login/index').login);
   //app.get('/login/forgot/', require('./api/login/forgot/index').init);
-  app.post('/api/v1/login/forgot/', require('/api/login/forgot/index').send);
+  app.post('/api/v1/login/forgot/', require('./api/login/forgot/index').send);
   //app.get('/login/reset/', require('./api/login/reset/index').init);
   app.get('/api/v1/login/reset/:email/:token/', require('./api/login/reset/index').init);
   app.put('/api/v1/login/reset/:email/:token/', require('./api/login/reset/index').set);
