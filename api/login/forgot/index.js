@@ -110,8 +110,8 @@ exports.send = function(req, res, next){
       from: req.app.config.smtp.from.name +' <'+ req.app.config.smtp.from.address +'>',
       to: user.email,
       subject: 'Reset your '+ req.app.config.projectName +' password',
-      textPath: './api/login/forgot/email-text',
-      htmlPath: './api/login/forgot/email-html',
+      textPath: 'login/forgot/email-text',
+      htmlPath: 'login/forgot/email-html',
       locals: {
         username: user.username,
         resetLink: req.protocol +'://'+ req.headers.host +'?u=' + user.email + '&t=' + token, ///api/v1/login/reset/'+ user.email +'/'+ token +'/',
