@@ -12,16 +12,9 @@ exports.init = function(req, res){
 exports.send = function(req, res, next){
   console.log('in send');
   
-  res.send('test');
-  //return 'test';
+  //res.send('test');
 
-  
-  
-};
-
-
-/*
-var workflow = req.app.utility.workflow(req, res);
+  var workflow = req.app.utility.workflow(req, res);
 
 
   workflow.on('validate', function() {
@@ -135,4 +128,12 @@ var workflow = req.app.utility.workflow(req, res);
   }); 
 
   workflow.emit('validate');
+
+  
+  
+};
+
+
+/*
+
 */
