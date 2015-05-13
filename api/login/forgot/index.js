@@ -11,7 +11,7 @@ exports.init = function(req, res){
 
 exports.send = function(req, res, next){
   console.log('in send');
-  //return 'test';
+  return 'test';
 
   var workflow = req.app.utility.workflow(req, res);
 
@@ -102,7 +102,9 @@ exports.send = function(req, res, next){
   });
 
   workflow.on('sendEmail', function(token, user) {
-    console.log('reached sendEmail');
+    console.log('reached sendEmail: ');
+    console.log(req.app.config.smtp.from.name +' <'+ req.app.config.smtp.from.address +'>');
+    console.log(req.app.config.smtp.credentials.user + ', ' + req.app.config.smtp.credentials.host);
     req.app.utility.sendmail(req, res, {
       from: req.app.config.smtp.from.name +' <'+ req.app.config.smtp.from.address +'>',
       to: user.email,
