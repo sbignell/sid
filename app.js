@@ -75,7 +75,8 @@ require('./rdbms-models')(app, sequelize);
 //settings
 app.disable('x-powered-by');
 app.set('port', config.port);
-app.set('views', path.join(__dirname, 'api')); //once we only send data does this go away?
+//app.set('views', path.join(__dirname, 'api')); //once we only send data does this go away?
+app.set('views', path.join(__dirname, 'client')); 
 app.set('view engine', 'jade');
 
 //middleware
