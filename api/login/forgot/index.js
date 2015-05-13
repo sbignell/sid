@@ -11,7 +11,9 @@ exports.init = function(req, res){
 
 exports.send = function(req, res, next){
   console.log('in send');
-  return 'test';
+  
+  res.send('test');
+  //return 'test';
 
   
   
