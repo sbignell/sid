@@ -7,8 +7,9 @@ exports = module.exports = function(sequelize, DataTypes) {
     resetPasswordToken: { type: String, default: '' },
     resetPasswordExpires: { type: Number, default: '' },
     isUsed: { type: String },
-    createdTime: { type: Date, default: Date.now },
-    usedTime: { type: Date }
+    usedTime: { type: Date },
+    createdAt: { type: Date, default: Date.now },
+    updatedAt: { type: Date, default: Date.now }
   });
   
 

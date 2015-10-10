@@ -5,7 +5,9 @@ exports = module.exports = function(sequelize, DataTypes) {
     id: { type: Number, default: '', autoIncrement: true },
     ip: { type: String, default: '' },
     userId: { type: Number, default: '' },
-    time: { type: Date, default: Date.now }
+    time: { type: Date, default: Date.now },
+    createdAt: { type: Date, default: Date.now },
+    updatedAt: { type: Date, default: Date.now }
   });
   
 

@@ -1,6 +1,6 @@
 //Use this ile to initialise your tables in MySQL. Then insert data...
 
-CREATE TABLE User (
+CREATE TABLE Users (
 id INT NOT NULL AUTO_INCREMENT,
 username VARCHAR(40) NOT NULL,
 password VARCHAR(40) NOT NULL,
@@ -17,7 +17,8 @@ roles VARCHAR(255),
 phone INT(20),
 createdById INT NOT NULL,
 createdByName VARCHAR(40) NOT NULL,
-createdTime TIMESTAMP,
+createdAt TIMESTAMP,
+updatedAt TIMESTAMP,
 twitterKey VARCHAR(40) DEFAULT NULL,
 githubKey VARCHAR(40) DEFAULT NULL,
 facebookKey VARCHAR(40) DEFAULT NULL,
@@ -28,55 +29,61 @@ PRIMARY KEY ( id ),
 UNIQUE ( email )
 );
 
-CREATE TABLE Role (
+CREATE TABLE Roles (
 id INT NOT NULL AUTO_INCREMENT,
 name VARCHAR(40) NOT NULL,
 company VARCHAR(40) NOT NULL,
 createdById INT NOT NULL,
 createdByName VARCHAR(40) NOT NULL,
-createdTime TIMESTAMP,
+createdAt TIMESTAMP,
+updatedAt TIMESTAMP,
 PRIMARY KEY ( id )
 );
 
-CREATE TABLE Group (
+CREATE TABLE Groups (
 id INT NOT NULL AUTO_INCREMENT,
 name VARCHAR(40) NOT NULL,
 company VARCHAR(40) NOT NULL,
 createdById INT NOT NULL,
 createdByName VARCHAR(40) NOT NULL,
-createdTime TIMESTAMP,
+createdAt TIMESTAMP,
+updatedAt TIMESTAMP,
 PRIMARY KEY ( id )
 );
 
-CREATE TABLE Company (
+CREATE TABLE Companys (
 id INT NOT NULL AUTO_INCREMENT,
 name VARCHAR(40) NOT NULL,
 createdById INT NOT NULL,
 createdByName VARCHAR(40) NOT NULL,
-createdTime TIMESTAMP,
+createdAt TIMESTAMP,
+updatedAt TIMESTAMP,
 PRIMARY KEY ( id )
 );
 
-CREATE TABLE LoginAttempt (
+CREATE TABLE LoginAttempts (
 id INT NOT NULL AUTO_INCREMENT,
 ip VARCHAR(20) NOT NULL,
 userId INT NOT NULL,
 time TIMESTAMP,
+createdAt TIMESTAMP,
+updatedAt TIMESTAMP,
 PRIMARY KEY ( id )
 );
 
-CREATE TABLE ResetPassword (
+CREATE TABLE ResetPasswords (
 id INT NOT NULL AUTO_INCREMENT,
 userId INT NOT NULL,
 resetPasswordToken VARCHAR(20) NOT NULL,
 resetPasswordExpires TIMESTAMP,
 isUsed VARCHAR(5) NOT NULL,
-createdTime TIMESTAMP,
 usedTime TIMESTAMP,
+createdAt TIMESTAMP,
+updatedAt TIMESTAMP,
 PRIMARY KEY ( id )
 );
 
-CREATE TABLE Wine (
+CREATE TABLE Wines (
 id INT NOT NULL AUTO_INCREMENT,
 grape VARCHAR(40) NOT NULL,
 estate VARCHAR(40) NOT NULL,
@@ -85,11 +92,12 @@ notes VARCHAR(255) NOT NULL,
 rating VARCHAR(5) NOT NULL,
 createdById INT NOT NULL,
 createdByName VARCHAR(40) NOT NULL,
-createdTime TIMESTAMP,
+createdAt TIMESTAMP,
+updatedAt TIMESTAMP,
 PRIMARY KEY ( id )
 );
 
-INSERT INTO User 
+INSERT INTO Users 
 ( id, username, password, email, isActive, isVerified, company, createdById, createdByName, createdTime )
 VALUES
 (1, 'root', '1234', 'youremail@address.com', 'yes', 'yes', 'Progress Labs', 1, 'root', now() );

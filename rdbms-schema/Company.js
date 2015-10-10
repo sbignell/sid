@@ -6,7 +6,8 @@ exports = module.exports = function(sequelize, DataTypes) {
     name: { type: String, default: '' },
     createdById: { type: String, default: '' },
     createdByName: { type: String, default: '' },
-    createdTime: { type: Date, default: Date.now }
+    createdAt: { type: Date, default: Date.now },
+    updatedAt: { type: Date, default: Date.now }
   });
   //adminGroupSchema.plugin(require('./plugins/pagedFind'));
 
