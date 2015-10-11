@@ -48,11 +48,13 @@ exports.set = function(req, res){
       }
 
       //console.dir(user);
+      var isonow = new Date().toISOString();
+      console.log('isonow is: ' + isonow);
 
       req.app.db.models.ResetPassword.findOne({
         where: {
           userId: user.id,
-          resetPasswordExpires: { $gt: Date.now() },
+          resetPasswordExpires: { $gt: isonow },
           isUsed: 'N'
         } 
       }).then(function(resetpw) {
