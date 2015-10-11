@@ -83,6 +83,7 @@ exports.send = function(req, res, next){
             resetPasswordExpires: fieldsToSet.resetPasswordExpires
           }).success(function() {
             console.log('forgot: user updated with resetpw fields');
+            workflow.emit('sendEmail', token, user);
           });
 
           //create Resetpassword record
