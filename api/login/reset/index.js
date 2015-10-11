@@ -37,15 +37,19 @@ exports.set = function(req, res){
       email: req.params.email,
       resetPasswordExpires: { $gt: Date.now() }
     };
-    req.app.db.models.User.findOne(conditions, function(err, user) {
-      if (err) {
+    req.app.db.models.User.findOne({
+      where: conditions
+    }).then(function(user) {
+      /*if (err) {
         return workflow.emit('exception', err);
-      }
+      }*/
 
       if (!user) {
         workflow.outcome.errors.push('Invalid request.');
         return workflow.emit('response');
       }
+
+      console.dir(user);
 
       req.app.db.models.User.validatePassword(req.params.token, user.resetPasswordToken, function(err, isValid) {
         if (err) {
