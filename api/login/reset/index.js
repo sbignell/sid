@@ -32,10 +32,13 @@ exports.set = function(req, res){
     workflow.emit('findUser');
   });
 
+  var isonow = new Date();
+  isonow = isonow.toISOString();
+
   workflow.on('findUser', function() {
     var conditions = {
       email: req.params.email,
-      resetPasswordExpires: { $gt: Date.now() }
+      resetPasswordExpires: isonow //{ $gt: Date.now() }
     };
     req.app.db.models.User.findOne({
       where: conditions

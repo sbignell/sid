@@ -49,7 +49,7 @@ exports.send = function(req, res, next){
 
   workflow.on('patchUser', function(token, hash) {
     console.log('patchUser');
-    var isotime = new Date()
+    var isotime = new Date();
     isotime.setHours(isotime.getHours() + 4);
     isotime = isotime.toISOString();
     console.log('isotime: ' + isotime);
