@@ -67,19 +67,29 @@ exports.set = function(req, res){
   });
 
   workflow.on('patchUser', function(user) {
+    console.log('reached patchUser');
     req.app.db.models.User.encryptPassword(req.body.password, function(err, hash) {
       if (err) {
         return workflow.emit('exception', err);
       }
 
       var fieldsToSet = { password: hash, resetPasswordToken: '' };
-      req.app.db.models.User.findByIdAndUpdate(user._id, fieldsToSet, function(err, user) {
+
+      user.updateAttributes({
+        fieldsToSet
+      }).success(function() {
+        console.log('reset: user updated with resetpw fields');
+        workflow.emit('response');
+      });
+
+
+      /*req.app.db.models.User.findByIdAndUpdate(user._id, fieldsToSet, function(err, user) {
         if (err) {
           return workflow.emit('exception', err);
         }
 
         workflow.emit('response');
-      });
+      });*/
     });
   });
 
