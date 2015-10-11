@@ -100,6 +100,11 @@ exports.set = function(req, res){
           return workflow.emit('exception', err);
         }
         console.log('api/login/reset/index: made it to final patchUser');
+
+        //fix up resetpassword record.. isUsed = Y etc
+
+
+
         workflow.emit('response');
 
       });
