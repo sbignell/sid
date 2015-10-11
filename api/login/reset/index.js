@@ -41,17 +41,15 @@ exports.set = function(req, res){
     };
     req.app.db.models.User.findOne(conditions, function(err, user) {
       if (err) {
-        console.log('err');
         return workflow.emit('exception', err);
       }
 
       if (!user) {
-        console.log('no user');
         workflow.outcome.errors.push('Invalid request.');
         return workflow.emit('response');
       }
 
-      console.dir(user);
+
       var conditions2 = {
         userId: user.id,
         resetPasswordExpires: { $gt: Date.now() },
