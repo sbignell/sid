@@ -80,9 +80,7 @@ exports.set = function(req, res){
       user.updateAttributes({                            
         password: hash,                           
         resetPasswordToken: ""                        
-      });
-
-      user.save.then(function(){
+      }).then(function(){
         if (err) {
           return workflow.emit('exception', err);
         }
@@ -91,6 +89,8 @@ exports.set = function(req, res){
         workflow.emit('response');
 
       });
+
+      //user.save
 
       //var fieldsToSet = { password: hash, resetPasswordToken: '' };
       /*req.app.db.models.User.findByIdAndUpdate(user.id, fieldsToSet, function(err, user) {

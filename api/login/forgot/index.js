@@ -14,7 +14,7 @@ exports.send = function(req, res, next){
   
   //res.send('test');
 
-  var workflow = req.app.utility.workflow(req, res);
+  /*var workflow = req.app.utility.workflow(req, res);
 
 
   workflow.on('validate', function() {
@@ -103,7 +103,7 @@ exports.send = function(req, res, next){
           
            
 
-      });
+      //});
 
   });
 
