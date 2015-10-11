@@ -39,11 +39,7 @@ exports.set = function(req, res){
       email: req.params.email
       //resetPasswordExpires: { $gt: Date.now() }
     };
-    req.app.db.models.User.findOne({ where: { email: req.params.email } }).then(function(err, user) {
-      if (err) {
-        console.log('err');
-        return workflow.emit('exception', err);
-      }
+    req.app.db.models.User.findOne({ where: { email: req.params.email } }).then(function(user) {
 
       if (!user) {
         console.log('no user');
@@ -57,11 +53,7 @@ exports.set = function(req, res){
         resetPasswordExpires: { $gt: Date.now() },
         isUsed: 'N'
       };
-      req.app.db.models.ResetPassword.findOne(conditions2, function(err, resetpw) {
-
-        if (err) {
-        return workflow.emit('exception', err);
-        }
+      req.app.db.models.ResetPassword.findOne(conditions2, function(resetpw) {
 
         if (!resetpw) {
           workflow.outcome.errors.push('Invalid request.');
@@ -69,10 +61,7 @@ exports.set = function(req, res){
         }
 
           console.log('api/login/reset/index: validatePassword');
-          req.app.db.models.ResetPassword.validatePassword(req.params.token, resetpw.resetPasswordToken, function(err, isValid) {
-            if (err) {
-              return workflow.emit('exception', err);
-            }
+          req.app.db.models.ResetPassword.validatePassword(req.params.token, resetpw.resetPasswordToken, function(isValid) {
 
             if (!isValid) {
               workflow.outcome.errors.push('Invalid request.');
