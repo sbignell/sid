@@ -41,7 +41,7 @@ exports.send = function(req, res, next){
         if (err) {
           return next(err);
         }
-        console.log('after encryptPW');
+        //console.log('after encryptPW');
         workflow.emit('patchUser', token, hash);
       });
     });
@@ -117,7 +117,7 @@ exports.send = function(req, res, next){
   });
 
   workflow.on('sendEmail', function(token, user) {
-    console.log('reached sendEmail: ');
+    console.log('reached sendEmail, token is: ' + token);
     console.log(req.app.config.smtp.from.name +' <'+ req.app.config.smtp.from.address +'>');
     console.log(req.app.config.smtp.credentials.user + ', ' + req.app.config.smtp.credentials.host);
     req.app.utility.sendmail(req, res, {
