@@ -24,6 +24,8 @@ githubKey VARCHAR(40) DEFAULT NULL,
 facebookKey VARCHAR(40) DEFAULT NULL,
 googleKey VARCHAR(40) DEFAULT NULL,
 tumblrKey VARCHAR(40) DEFAULT NULL,
+resetPasswordToken VARCHAR(40) DEFAULT NULL,
+resetPasswordExpires TIMESTAMP,
 deactivatedTime TIMESTAMP,
 PRIMARY KEY ( id ),
 UNIQUE ( email )
