@@ -13,8 +13,11 @@ exports = module.exports = function(sequelize, DataTypes) {
   });
   ResetPassword.validatePassword = function(password, hash, done) {
     var bcrypt = require('bcrypt');
-    
+    console.log('VP: P is ' + password + ' and H is ' + hash);
     bcrypt.compare(password, hash, function(err, res) {
+      console.dir(err);
+      console.log('@@@@@@@@@@');
+      console.dir(res);
       done(err, res);
     });
   };
