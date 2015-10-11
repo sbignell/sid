@@ -39,7 +39,7 @@ exports.set = function(req, res){
       email: req.params.email
       //resetPasswordExpires: { $gt: Date.now() }
     };
-    req.app.db.models.User.findOne(conditions, function(err, user) {
+    req.app.db.models.User.findOne({ where: { email: req.params.email } }).then(function(err, user) {
       if (err) {
         console.log('err');
         return workflow.emit('exception', err);
