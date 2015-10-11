@@ -105,7 +105,6 @@ exports.send = function(req, res, next){
 
           });
       });
-  };
 
   workflow.on('sendEmail', function(token, user) {
     console.log('reached sendEmail: ');
