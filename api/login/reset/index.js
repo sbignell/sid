@@ -65,7 +65,12 @@ exports.set = function(req, res){
           }
 
           console.log('api/login/reset/index: validatePassword');
-          req.app.db.models.ResetPassword.validatePassword(req.params.token, resetpw.resetPasswordToken, function(isValid) {
+          req.app.db.models.ResetPassword.validatePassword(req.params.token, resetpw.resetPasswordToken, function(err, isValid) {
+
+            if(err){
+              console.log(err);
+              return workflow.emit('response');
+            }
 
             if (!isValid) {
               workflow.outcome.errors.push('Invalid request.');
