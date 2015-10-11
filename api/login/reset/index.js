@@ -34,15 +34,12 @@ exports.set = function(req, res){
 
   workflow.on('findUser', function() {
     console.log('api/login/reset/index: findUser');
-    //console.log('email: ' + req.params.email);
-    var isonow = new Date().toISOString();
-    
-    req.app.db.models.User.findOne({ 
-      where: { 
-        email: req.params.email, 
-        resetPasswordExpires: { $gt: isonow } 
-      } 
-    }).then(function(user) {
+    console.log('email: ' + req.params.email);
+    var conditions = {
+      email: req.params.email
+      //resetPasswordExpires: { $gt: Date.now() }
+    };
+    req.app.db.models.User.findOne({ where: { email: req.params.email } }).then(function(user) {
 
       if (!user) {
         console.log('no user');
@@ -51,22 +48,38 @@ exports.set = function(req, res){
       }
 
       //console.dir(user);
+      var isonow = new Date().toISOString();
+      console.log('isonow is: ' + isonow);
 
-      console.log('api/login/reset/index: validatePassword');
-      req.app.db.models.User.validatePassword(req.params.token, user.resetPasswordToken, function(err, isValid) {
+      req.app.db.models.ResetPassword.findOne({
+        where: {
+          userId: user.id,
+          resetPasswordExpires: { $gt: isonow },
+          isUsed: 'N'
+        } 
+      }).then(function(resetpw) {
 
-        if(err){
-          console.log(err);
-          return workflow.emit('response');
-        }
+          if (!resetpw) {
+            workflow.outcome.errors.push('Invalid request.');
+            return workflow.emit('response');
+          }
 
-        if (!isValid) {
-          workflow.outcome.errors.push('Invalid request.');
-          return workflow.emit('response');
-        }
+          console.log('api/login/reset/index: validatePassword');
+          req.app.db.models.ResetPassword.validatePassword(req.params.token, resetpw.resetPasswordToken, function(err, isValid) {
 
-        console.log('api/login/reset/index: validatePassword succeeded');
-        workflow.emit('patchUser', user);
+            if(err){
+              console.log(err);
+              return workflow.emit('response');
+            }
+
+            if (!isValid) {
+              workflow.outcome.errors.push('Invalid request.');
+              return workflow.emit('response');
+            }
+
+            console.log('api/login/reset/index: validatePassword succeeded');
+            workflow.emit('patchUser', user);
+          });
       });
     });
   });
@@ -87,6 +100,10 @@ exports.set = function(req, res){
           return workflow.emit('exception', err);
         }
         console.log('api/login/reset/index: made it to final patchUser');
+
+        //fix up resetpassword record.. isUsed = Y etc
+
+
 
         workflow.emit('response');
 

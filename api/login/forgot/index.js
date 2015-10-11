@@ -76,29 +76,26 @@ exports.send = function(req, res, next){
             return workflow.emit('exception', 'couldn\'t find user');
           }
 
-          user.updateAttributes({                            
-            resetPasswordToken: hash,
-            resetPasswordExpires: isotime                
-          });
+          var userId = user.id;
 
           //create Resetpassword record
-          /*var resetPW = req.app.db.models.ResetPassword.build({
+          var resetPW = req.app.db.models.ResetPassword.build({
             userId: userId, 
             resetPasswordToken: fieldsToSet.resetPasswordToken, 
             resetPasswordExpires: fieldsToSet.resetPasswordExpires,
             isUsed: 'N',
-          });*/
+          });
 
           // persist an instance
-          user.save()
+          resetPW.save()
             .error(function(err) {
               // error callback
-              console.log('Couldnt save user: ' + err);
+              console.log('Couldnt save resetPassword: ' + err);
               return workflow.emit('exception', err);
             })
-            .success(function(user) {
+            .success(function(newResetPW) {
               // success callback
-              console.log('Saved user');
+              console.log('Saved new ResetPW: ' + newResetPW.resetPasswordToken);
 
               workflow.emit('sendEmail', token, user);
               
