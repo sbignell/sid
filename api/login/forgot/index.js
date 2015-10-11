@@ -70,15 +70,15 @@ exports.send = function(req, res, next){
       })
       .success(function(user) {
           console.log('User returned.');
-          //console.dir(user);
+          console.dir(user);
 
           if (!user) {
             return workflow.emit('exception', 'couldn\'t find user');
           }
 
           user.updateAttributes({                            
-            resetPasswordToken: fieldsToSet.resetPasswordToken,
-            resetPasswordExpires: fieldsToSet.resetPasswordExpires                
+            resetPasswordToken: hash,
+            resetPasswordExpires: isotime                
           });
 
           //create Resetpassword record
@@ -90,11 +90,14 @@ exports.send = function(req, res, next){
           });*/
 
           // persist an instance
-          user.save().then(function(){
-              if (err) {
-                return workflow.emit('exception', err);
-              }
-
+          user.save()
+            .error(function(err) {
+              // error callback
+              console.log('Couldnt save user: ' + err);
+              return workflow.emit('exception', err);
+            })
+            .success(function(user) {
+              // success callback
               console.log('Saved user');
 
               workflow.emit('sendEmail', token, user);

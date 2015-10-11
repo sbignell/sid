@@ -25,7 +25,7 @@ exports = module.exports = function(sequelize, DataTypes) {
     googleKey: { type: String, default: '' },
     tumblrKey: { type: String, default: '' },
     resetPasswordToken: { type: String, default: '' },
-    resetPasswordExpires: { type: Date, default: '' },
+    resetPasswordExpires: { type: Number, default: '' },
     deactivatedTime: { type: Date }
   });
   /*User.methods.canPlayRoleOf = function(role) {
