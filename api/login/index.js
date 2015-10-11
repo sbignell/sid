@@ -32,9 +32,7 @@ exports.check = function(req, res){
     res.send(JSON.stringify(req.user));
   } else {
     console.dir('not logged in');
-    //return '{error: not logged in}';
-
-    res.render('index');
+    return '{error: not logged in}';
   } 
 
 };
