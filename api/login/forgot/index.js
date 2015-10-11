@@ -48,11 +48,15 @@ exports.send = function(req, res, next){
   });
 
   workflow.on('patchUser', function(token, hash) {
-    console.log('patchUser: resetPasswordExpires is ' + Date.now() + 10000000);
+    var starttime = new Date();
+    // Get the iso time (GMT 0 == UTC 0)
+    var isotime = new Date((new Date(starttime)).toISOString() );
+    isotime += 10000000;
+    console.log('patchUser: resetPasswordExpires is ' + isotime);
     var conditions = { email: req.body.email.toLowerCase() };
     var fieldsToSet = { 
       resetPasswordToken: hash,
-      resetPasswordExpires: Date.now() + 10000000
+      resetPasswordExpires: isotime //Date.now() + 10000000
     };
 
      req.app.db.models.User.find({
