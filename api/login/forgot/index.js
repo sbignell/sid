@@ -60,7 +60,7 @@ exports.send = function(req, res, next){
       resetPasswordExpires: isotime //Date.now() + 10000000
     };
 
-     req.app.db.models.User.findOne({
+     req.app.db.models.User.find({
           where: conditions
        })
       .error(function(err) {
@@ -79,16 +79,7 @@ exports.send = function(req, res, next){
           user.updateAttributes({                            
             resetPasswordToken: fieldsToSet.resetPasswordToken,
             resetPasswordExpires: fieldsToSet.resetPasswordExpires                
-          }).then(function(){
-              if (err) {
-                return workflow.emit('exception', err);
-              }
-
-              console.log('Saved user');
-
-              workflow.emit('sendEmail', token, user);
-              
-            });
+          });
 
           //create Resetpassword record
           /*var resetPW = req.app.db.models.ResetPassword.build({
@@ -99,7 +90,16 @@ exports.send = function(req, res, next){
           });*/
 
           // persist an instance
-          //user.save()
+          user.save().then(function(){
+              if (err) {
+                return workflow.emit('exception', err);
+              }
+
+              console.log('Saved user');
+
+              workflow.emit('sendEmail', token, user);
+              
+            });
           
            
 
