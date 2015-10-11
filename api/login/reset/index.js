@@ -33,6 +33,7 @@ exports.set = function(req, res){
   });
 
   workflow.on('findUser', function() {
+    console.log('api/login/reset/index: findUser');
     var conditions = {
       email: req.params.email,
       resetPasswordExpires: { $gt: Date.now() }
@@ -47,6 +48,7 @@ exports.set = function(req, res){
         return workflow.emit('response');
       }
 
+      console.log('api/login/reset/index: validatePassword');
       req.app.db.models.User.validatePassword(req.params.token, user.resetPasswordToken, function(err, isValid) {
         if (err) {
           return workflow.emit('exception', err);
@@ -73,7 +75,7 @@ exports.set = function(req, res){
         if (err) {
           return workflow.emit('exception', err);
         }
-
+        console.log('api/login/reset/index: made it to final patchUser');
         workflow.emit('response');
       });
     });
