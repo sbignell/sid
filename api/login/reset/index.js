@@ -36,7 +36,7 @@ exports.set = function(req, res){
     console.log('api/login/reset/index: findUser');
     console.log('email: ' + req.params.email);
     var conditions = {
-      email: req.params.email
+      email: req.params.email,
       //resetPasswordExpires: { $gt: Date.now() }
     };
     req.app.db.models.User.findOne(conditions, function(err, user) {
