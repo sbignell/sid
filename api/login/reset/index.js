@@ -34,9 +34,10 @@ exports.set = function(req, res){
 
   workflow.on('findUser', function() {
     console.log('api/login/reset/index: findUser');
+    console.log('email: ' + req.params.email);
     var conditions = {
       email: req.params.email,
-      resetPasswordExpires: { $gt: Date.now() }
+      //resetPasswordExpires: { $gt: Date.now() }
     };
     req.app.db.models.User.findOne(conditions, function(err, user) {
       if (err) {
@@ -48,18 +49,37 @@ exports.set = function(req, res){
         return workflow.emit('response');
       }
 
-      console.log('api/login/reset/index: validatePassword');
-      req.app.db.models.User.validatePassword(req.params.token, user.resetPasswordToken, function(err, isValid) {
+
+      var conditions2 = {
+        userId: user.id,
+        resetPasswordExpires: { $gt: Date.now() },
+        isUsed: 'N'
+      };
+      req.app.db.models.ResetPassword.findOne(conditions2, function(err, resetpw) {
+
         if (err) {
-          return workflow.emit('exception', err);
+        return workflow.emit('exception', err);
         }
 
-        if (!isValid) {
+        if (!resetpw) {
           workflow.outcome.errors.push('Invalid request.');
           return workflow.emit('response');
         }
 
-        workflow.emit('patchUser', user);
+          console.log('api/login/reset/index: validatePassword');
+          req.app.db.models.ResetPassword.validatePassword(req.params.token, resetpw.resetPasswordToken, function(err, isValid) {
+            if (err) {
+              return workflow.emit('exception', err);
+            }
+
+            if (!isValid) {
+              workflow.outcome.errors.push('Invalid request.');
+              return workflow.emit('response');
+            }
+
+            console.log('api/login/reset/index: validatePassword succeeded');
+            workflow.emit('patchUser', user);
+          });
       });
     });
   });

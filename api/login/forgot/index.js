@@ -48,7 +48,7 @@ exports.send = function(req, res, next){
   });
 
   workflow.on('patchUser', function(token, hash) {
-    console.log('patchUser');
+    console.log('patchUser: resetPasswordExpires is ' + Date.now() + 10000000);
     var conditions = { email: req.body.email.toLowerCase() };
     var fieldsToSet = { 
       resetPasswordToken: hash,
