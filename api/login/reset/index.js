@@ -38,7 +38,7 @@ exports.set = function(req, res){
   workflow.on('findUser', function() {
     var conditions = {
       email: req.params.email,
-      resetPasswordExpires: isonow //{ $gt: Date.now() }
+      resetPasswordExpires: { $gt: isonow } //{ $gt: Date.now() }
     };
     req.app.db.models.User.findOne({
       where: conditions
