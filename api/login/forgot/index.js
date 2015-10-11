@@ -103,8 +103,8 @@ exports.send = function(req, res, next){
           
            
 
-          });
       });
+
   };
 
   workflow.on('sendEmail', function(token, user) {
