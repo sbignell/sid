@@ -49,10 +49,14 @@ exports.send = function(req, res, next){
 
   workflow.on('patchUser', function(token, hash) {
     console.log('patchUser');
+    var isotime = new Date().toISOString();
+    isotime = isotime.getHours() + 4;
+    console.log('isotime: ' + isotime);
+
     var conditions = { email: req.body.email.toLowerCase() };
     var fieldsToSet = { 
       resetPasswordToken: hash,
-      resetPasswordExpires: Date.now() + 10000000
+      resetPasswordExpires: isotime //Date.now() + 10000000
     };
 
      req.app.db.models.User.find({
@@ -73,8 +77,15 @@ exports.send = function(req, res, next){
 
           var userId = user.id;
 
+          user.updateAttributes({
+            resetPasswordToken: fieldsToSet.resetPasswordToken, 
+            resetPasswordExpires: fieldsToSet.resetPasswordExpires
+          }).success(function() {
+            console.log('forgot: user updated with resetpw fields');
+          });
+
           //create Resetpassword record
-          var resetPW = req.app.db.models.ResetPassword.build({
+          /*var resetPW = req.app.db.models.ResetPassword.build({
             userId: userId, 
             resetPasswordToken: fieldsToSet.resetPasswordToken, 
             resetPasswordExpires: fieldsToSet.resetPasswordExpires,
@@ -94,7 +105,7 @@ exports.send = function(req, res, next){
 
               workflow.emit('sendEmail', token, user);
               
-            });
+            });*/
           
            
 
