@@ -66,7 +66,7 @@ exports = module.exports = function(sequelize, DataTypes) {
   User.validatePassword = function(password, hash, done) {
     var bcrypt = require('bcrypt');
     bcrypt.compare(password, hash, function(err, res) {
-      console.log('token2: ' + password + ', hash2: ' + hsh + ', bcrypt response is: ')
+      console.log('token2: ' + password + ', hash2: ' + hash + ', bcrypt response is: ')
       console.dir(res);
       done(err, res);
     });
