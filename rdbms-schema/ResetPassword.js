@@ -11,12 +11,6 @@ exports = module.exports = function(sequelize, DataTypes) {
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now }
   });
-  ResetPassword.validatePassword = function(password, hash, done) {
-    var bcrypt = require('bcrypt');
-    bcrypt.compare(password, hash, function(err, res) {
-      done(err, res);
-    });
-  };
   
 
   return ResetPassword;
