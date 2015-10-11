@@ -53,6 +53,7 @@ exports.send = function(req, res, next){
     isotime.setHours(isotime.getHours() + 4);
     isotime = isotime.toISOString();
     console.log('isotime: ' + isotime);
+    console.log('token: ' + token + ', hash: ' + hash);
 
     var conditions = { email: req.body.email.toLowerCase() };
     var fieldsToSet = { 
