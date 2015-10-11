@@ -47,15 +47,13 @@ exports.set = function(req, res){
         return workflow.emit('response');
       }
 
-      //console.dir(user);
-
-      req.app.db.models.ResetPassword.findOne({
-        where: {
-          userId: user.id,
-          resetPasswordExpires: { $gt: Date.now() },
-          isUsed: 'N'
-        } 
-      }).then(function(resetpw) {
+      console.dir(user);
+      var conditions2 = {
+        userId: user.id,
+        resetPasswordExpires: { $gt: Date.now() },
+        isUsed: 'N'
+      };
+      req.app.db.models.ResetPassword.findOne(conditions2, function(resetpw) {
 
         if (!resetpw) {
           workflow.outcome.errors.push('Invalid request.');
@@ -83,28 +81,14 @@ exports.set = function(req, res){
         return workflow.emit('exception', err);
       }
 
-      user.updateAttributes({                            
-        password: hash,                           
-        resetPasswordToken: ""                        
-      });
-
-      user.save.then(function(){
+      var fieldsToSet = { password: hash, resetPasswordToken: '' };
+      req.app.db.models.User.findByIdAndUpdate(user._id, fieldsToSet, function(err, user) {
         if (err) {
           return workflow.emit('exception', err);
         }
         console.log('api/login/reset/index: made it to final patchUser');
         workflow.emit('response');
-
       });
-
-      //var fieldsToSet = { password: hash, resetPasswordToken: '' };
-      /*req.app.db.models.User.findByIdAndUpdate(user.id, fieldsToSet, function(err, user) {
-        if (err) {
-          return workflow.emit('exception', err);
-        }
-        console.log('api/login/reset/index: made it to final patchUser');
-        workflow.emit('response');
-      });*/
     });
   });
 
