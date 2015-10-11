@@ -14,7 +14,7 @@ exports.send = function(req, res, next){
   
   //res.send('test');
 
-  /*var workflow = req.app.utility.workflow(req, res);
+  var workflow = req.app.utility.workflow(req, res);
 
 
   workflow.on('validate', function() {
@@ -88,11 +88,23 @@ exports.send = function(req, res, next){
 
               workflow.emit('sendEmail', token, user);
               
-            });         
+            });
+
+          //create Resetpassword record
+          /*var resetPW = req.app.db.models.ResetPassword.build({
+            userId: userId, 
+            resetPasswordToken: fieldsToSet.resetPasswordToken, 
+            resetPasswordExpires: fieldsToSet.resetPasswordExpires,
+            isUsed: 'N',
+          });*/
+
+          // persist an instance
+          //user.save()
+          
            
 
-        });
-    });
+          });
+      });
 
   workflow.on('sendEmail', function(token, user) {
     console.log('reached sendEmail: ');
@@ -121,7 +133,7 @@ exports.send = function(req, res, next){
 
   workflow.emit('validate');
 
-  */
+  
   
 };
 
