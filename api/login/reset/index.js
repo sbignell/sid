@@ -56,6 +56,8 @@ exports.set = function(req, res){
           return workflow.emit('exception', err);
         }
 
+        console.dir(isValid);
+
         if (!isValid) {
           workflow.outcome.errors.push('Invalid request.');
           return workflow.emit('response');
