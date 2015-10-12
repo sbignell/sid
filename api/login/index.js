@@ -142,7 +142,7 @@ exports.login = function(req, res){
           workflow.emit('response');
         });
       }
-    })(req, res, next);
+    });//(req, res);
   });
 
   workflow.emit('validate');
