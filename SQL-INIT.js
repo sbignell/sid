@@ -24,6 +24,8 @@ githubKey VARCHAR(40) DEFAULT NULL,
 facebookKey VARCHAR(40) DEFAULT NULL,
 googleKey VARCHAR(40) DEFAULT NULL,
 tumblrKey VARCHAR(40) DEFAULT NULL,
+resetPasswordToken VARCHAR(255) NOT NULL,
+resetPasswordExpires TIMESTAMP,
 deactivatedTime TIMESTAMP,
 PRIMARY KEY ( id ),
 UNIQUE ( email )
@@ -66,18 +68,6 @@ id INT NOT NULL AUTO_INCREMENT,
 ip VARCHAR(20) NOT NULL,
 userId INT NOT NULL,
 time TIMESTAMP,
-createdAt TIMESTAMP,
-updatedAt TIMESTAMP,
-PRIMARY KEY ( id )
-);
-
-CREATE TABLE ResetPasswords (
-id INT NOT NULL AUTO_INCREMENT,
-userId INT NOT NULL,
-resetPasswordToken VARCHAR(20) NOT NULL,
-resetPasswordExpires TIMESTAMP,
-isUsed VARCHAR(5) NOT NULL,
-usedTime TIMESTAMP,
 createdAt TIMESTAMP,
 updatedAt TIMESTAMP,
 PRIMARY KEY ( id )

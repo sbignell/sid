@@ -80,6 +80,7 @@ exports.login = function(req, res){
     };
 
     var asyncFinally = function(err, results) {
+      console.log('reached async');
       if (err) {
         return workflow.emit('exception', err);
       }
@@ -97,6 +98,7 @@ exports.login = function(req, res){
   });
 
   workflow.on('attemptLogin', function() {
+    console.log('reached attemptLogin');
     req._passport.instance.authenticate('local', function(err, user, info) {
       if (err) {
         return workflow.emit('exception', err);
