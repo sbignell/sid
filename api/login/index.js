@@ -69,14 +69,24 @@ exports.login = function(req, res){
     };
 
     var getIpUserCount = function(done) {
-      var conditions = { ip: req.ip, user: req.body.username };
-      req.app.db.models.LoginAttempt.count({where: conditions}).then(function(err, count) {
-        if (err) {
-          return done(err);
-        }
 
-        done(null, count);
-      });
+      req.app.db.models.User.findOne({
+          where: {
+            username: req.body.username
+          }
+       }).then(function(user){
+
+          var conditions = { ip: req.ip, userId: user.id };
+          req.app.db.models.LoginAttempt.count({where: conditions}).then(function(err, count) {
+            if (err) {
+              return done(err);
+            }
+
+            done(null, count);
+          });
+
+       });
+      
     };
 
     var asyncFinally = function(err, results) {
