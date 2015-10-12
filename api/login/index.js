@@ -90,12 +90,14 @@ exports.login = function(req, res){
     };
 
     var asyncFinally = function(err, results) {
-      //console.log('reached async');
+      console.log('reached async');
       if (err) {
+        console.log('err');
         return workflow.emit('exception', err);
       }
 
       if (results.ip >= req.app.config.loginAttempts.forIp || results.ipUser >= req.app.config.loginAttempts.forIpAndUser) {
+        console.log('reached limit');
         workflow.outcome.errors.push('You\'ve reached the maximum number of login attempts. Please try again later.');
         return workflow.emit('response');
       }

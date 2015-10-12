@@ -51,7 +51,7 @@ exports = module.exports = function(app, passport) {
           where: conditions
        }).then(function(user) {
           console.log('User returned.');
-          console.dir(user);
+          //console.dir(user);
 
           if (!user) {
             return done(null, false, { message: 'Unknown user' });
