@@ -112,7 +112,7 @@ exports.login = function(req, res){
     console.log(req);
     req._passport.instance.authenticate('local', function(err, user, info) {
       if (err) {
-        console.log('err');
+        console.log('err: ' + err);
         return workflow.emit('exception', err);
       }
 
@@ -142,7 +142,7 @@ exports.login = function(req, res){
           workflow.emit('response');
         });
       }
-    })(req, res);
+    })(req, res, next);
   });
 
   workflow.emit('validate');
