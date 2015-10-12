@@ -100,15 +100,16 @@ exports.login = function(req, res){
         return workflow.emit('response');
       }
       else {
-        workflow.emit('attemptLogin');
+        workflow.emit('attemptLogin', user);
       }
     };
 
     require('async').parallel({ ip: getIpCount, ipUser: getIpUserCount }, asyncFinally);
   });
 
-  workflow.on('attemptLogin', function() {
+  workflow.on('attemptLogin', function(passeduser) {
     console.log('reached attemptLogin');
+    console.log(req);
     req._passport.instance.authenticate('local', function(err, user, info) {
       if (err) {
         console.log('err');
@@ -117,11 +118,8 @@ exports.login = function(req, res){
 
       if (!user) {
         console.log('no user');
-        var fieldsToSet = { ip: req.ip, user: req.body.username };
-        req.app.db.models.LoginAttempt.create(fieldsToSet, function(err, doc) {
-          if (err) {
-            return workflow.emit('exception', err);
-          }
+        var fieldsToSet = { ip: req.ip, user: passeduser.id };
+        req.app.db.models.LoginAttempt.build(fieldsToSet).save().then(function(doc) {
 
           workflow.outcome.errors.push('Username and password combination not found or your account is inactive.');
           return workflow.emit('response');
