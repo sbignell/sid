@@ -50,7 +50,7 @@ exports = module.exports = function(app, passport) {
       app.db.models.User.findOne({
           where: conditions
        }).then(function(user) {
-          console.log('User returned.');
+          //console.log('User returned.');
           //console.dir(user);
 
           if (!user) {
@@ -151,7 +151,7 @@ exports = module.exports = function(app, passport) {
   }
 
   passport.serializeUser(function(user, done) {
-    done(null, user._id);
+    done(null, user.id);
   });
 
   passport.deserializeUser(function(id, done) {
