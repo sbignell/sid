@@ -20,6 +20,8 @@ exports = module.exports = function(app, passport) {
         var conditions = { isActive: 'yes', email: username.toLowerCase() };
       }
 
+      //console.dir(app);
+
       //mongo
       /*app.db.models.User.findOne(conditions, function(err, user) {
 
@@ -45,7 +47,7 @@ exports = module.exports = function(app, passport) {
       });*/
 
       //mysql
-      req.app.db.models.User.findOne({
+      app.db.models.User.findOne({
           where: conditions
        }).then(function(user) {
           console.log('User returned.');
