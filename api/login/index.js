@@ -90,7 +90,7 @@ exports.login = function(req, res){
     };
 
     var asyncFinally = function(err, results) {
-      console.log('reached async');
+      //console.log('reached async');
       if (err) {
         return workflow.emit('exception', err);
       }
@@ -111,10 +111,12 @@ exports.login = function(req, res){
     console.log('reached attemptLogin');
     req._passport.instance.authenticate('local', function(err, user, info) {
       if (err) {
+        console.log('err');
         return workflow.emit('exception', err);
       }
 
       if (!user) {
+        console.log('no user');
         var fieldsToSet = { ip: req.ip, user: req.body.username };
         req.app.db.models.LoginAttempt.create(fieldsToSet, function(err, doc) {
           if (err) {
@@ -126,11 +128,13 @@ exports.login = function(req, res){
         });
       }
       else {
+        console.log('go to login');
         req.login(user, function(err) {
           if (err) {
+            console.log('err');
             return workflow.emit('exception', err);
           }
-          
+          console.log('all good');
           workflow.emit('response');
         });
       }
