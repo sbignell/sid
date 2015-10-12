@@ -13,11 +13,11 @@ exports = module.exports = function(app, passport) {
 
       if (username.indexOf('@') === -1) {
         //conditions.username = username;
-        conditions = { isActive: 'yes', username: username };
+        var conditions = { isActive: 'yes', username: username };
       }
       else {
         //conditions.email = username.toLowerCase();
-        conditions = { isActive: 'yes', email: username.toLowerCase() };
+        var conditions = { isActive: 'yes', email: username.toLowerCase() };
       }
 
       //mongo
