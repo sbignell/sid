@@ -109,7 +109,7 @@ exports.login = function(req, res){
 
   workflow.on('attemptLogin', function() {
     console.log('reached attemptLogin');
-    console.log(req);
+    //console.log(req);
     req._passport.instance.authenticate('local', function(err, user, info) {
       if (err) {
         console.log('err: ' + err);
@@ -142,7 +142,7 @@ exports.login = function(req, res){
           workflow.emit('response');
         });
       }
-    });//(req, res);
+    })(req, res);
   });
 
   workflow.emit('validate');

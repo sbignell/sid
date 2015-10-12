@@ -10,12 +10,14 @@ exports = module.exports = function(app, passport) {
 
   passport.use(new LocalStrategy(
     function(username, password, done) {
-      var conditions = { isActive: 'yes' };
+
       if (username.indexOf('@') === -1) {
-        conditions.username = username;
+        //conditions.username = username;
+        conditions = { isActive: 'yes', username: username };
       }
       else {
-        conditions.email = username.toLowerCase();
+        //conditions.email = username.toLowerCase();
+        conditions = { isActive: 'yes', email: username.toLowerCase() };
       }
 
       //mongo
@@ -43,15 +45,9 @@ exports = module.exports = function(app, passport) {
       });*/
 
       //mysql
-      req.app.db.models.User.find({
+      req.app.db.models.User.findOne({
           where: conditions
-       })
-      .error(function(err) {
-        // error callback
-        console.log('Couldnt find user: ' + err);
-        return done(err);
-      })
-      .success(function(user) {
+       }).then(function(user) {
           console.log('User returned.');
           console.dir(user);
 
