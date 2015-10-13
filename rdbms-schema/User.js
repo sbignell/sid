@@ -29,7 +29,7 @@ exports = module.exports = function(sequelize, DataTypes) {
     resetPasswordExpires: { type: Date, default: '' },
     deactivatedTime: { type: Date }
   },{
-    classMethods: {
+    instanceMethods: {
       canPlayRoleOf: function(role) {
         if (role === "admin" && this.roles.search("0,")) {
           return true;
