@@ -2,6 +2,8 @@
 
 exports = module.exports = function(app, sequelize) {
 
+  app.db.models = {};
+
   app.db.models.User = sequelize.import(__dirname + '/rdbms-schema/User');
   app.db.models.Role = sequelize.import(__dirname + '/rdbms-schema/Role');
   //app.db.models.Admin = sequelize.import(__dirname + '/rdbms-schema/Admin');
