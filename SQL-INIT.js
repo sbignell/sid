@@ -91,3 +91,6 @@ INSERT INTO Users
 ( id, username, password, email, isActive, isVerified, company, createdById, createdByName, createdTime )
 VALUES
 (1, 'root', '1234', 'youremail@address.com', 'yes', 'yes', 'Progress Labs', 1, 'root', now() );
+
+//Insert into roles..
+//Insert into companies

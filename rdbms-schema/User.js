@@ -56,29 +56,6 @@ exports = module.exports = function(sequelize, DataTypes) {
     }
 
   });
-  /*User.canPlayRoleOf = function(role) {
-    if (role === "admin" && this.roles.search("0,")) {
-      return true;
-    }
-
-    if (role === "account" && this.roles.search("1,")) {
-      return true;
-    }
-
-    return false;
-  };
-  User.defaultReturnUrl = function() {
-    var returnUrl = '/';
-    if (this.canPlayRoleOf('account')) {
-      returnUrl = '/account/';
-    }
-
-    if (this.canPlayRoleOf('admin')) {
-      returnUrl = '/admin/';
-    }
-
-    return returnUrl;
-  };*/
   User.encryptPassword = function(password, done) {
     var bcrypt = require('bcrypt');
     bcrypt.genSalt(10, function(err, salt) {
