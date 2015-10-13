@@ -5,7 +5,7 @@ exports.find = function(req, res, next){
 
   req.app.db.models.Wine.findAll({
       where: { createdById: req.user.id },
-      attributes: ['id', 'grape', 'estate', 'name', 'notes', 'rating', 'createdBy']
+      attributes: ['id', 'grape', 'estate', 'name', 'notes', 'rating', 'createdById']
    }).then(function(items) {
     
       console.log('Items returned.');
