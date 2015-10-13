@@ -172,7 +172,7 @@ exports = module.exports = function(app, passport) {
     app.db.models.User.findOne({
         where: {id: id} 
      })
-    .then(function(err, user) {
+    .then(function(user) {
         console.log('User deserialized.');
         console.dir(user);
 
