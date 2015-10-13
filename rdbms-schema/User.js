@@ -14,6 +14,7 @@ exports = module.exports = function(sequelize, DataTypes) {
     lastname: { type: String, default: '' },
     fullname: { type: String, default: '' },
     company: { type: String, default: '' },
+    roles: { type: String, default: '' },
     phone: { type: String, default: '' },
     createdById: { type: String, default: '' },
     createdByName: { type: String, default: '' },
@@ -28,12 +29,12 @@ exports = module.exports = function(sequelize, DataTypes) {
     resetPasswordExpires: { type: Date, default: '' },
     deactivatedTime: { type: Date }
   });
-  /*User.methods.canPlayRoleOf = function(role) {
-    if (role === "admin" && this.adminrole) {
+  User.methods.canPlayRoleOf = function(role) {
+    if (role === "admin" && this.roles.search("0,")) {
       return true;
     }
 
-    if (role === "account" && this.accountrole) {
+    if (role === "account" && this.roles.search("1,")) {
       return true;
     }
 
@@ -50,7 +51,7 @@ exports = module.exports = function(sequelize, DataTypes) {
     }
 
     return returnUrl;
-  };*/
+  };
   User.encryptPassword = function(password, done) {
     var bcrypt = require('bcrypt');
     bcrypt.genSalt(10, function(err, salt) {
