@@ -60,10 +60,12 @@ sequelize
     console.log('Sequelize_MySQL: Unable to connect to the database. ' + err);
   } else {
     console.log('Sequelize_MySQL: Connection has been established successfully.');
-    //config relational (mysql) data models
-    require('./rdbms-models')(app, sequelize);
+    
   }
 });
+
+//config relational (mysql) data models
+require('./rdbms-models')(app, sequelize);
 
 var sessionStore = new SessionStore({
     host: config.mysql.host,
