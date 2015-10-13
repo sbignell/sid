@@ -6,7 +6,8 @@ var config = require('./config'),
     cookieParser = require('cookie-parser'),
     bodyParser = require('body-parser'),
     session = require('express-session'),
-    mongoStore = require('connect-mongo')(session),
+    SessionStore = require('express-mysql-session'),
+    //mongoStore = require('connect-mongo')(session),
     Sequelize = require('sequelize'),
     //fs = require('fs'),
     //log = require('log'),
@@ -15,7 +16,7 @@ var config = require('./config'),
     //https = require('https'),
     path = require('path'),
     passport = require('passport'),
-    mongoose = require('mongoose'),
+    //mongoose = require('mongoose'),
     helmet = require('helmet'),
     csrf = require('csurf');
 
@@ -39,11 +40,11 @@ app.config = config;
 app.server = http.createServer(app);
 
 //setup mongoose
-app.db = mongoose.createConnection(config.mongodb.uri);
-app.db.on('error', console.error.bind(console, 'mongoose connection error: '));
-app.db.once('open', function () {
+//app.db = mongoose.createConnection(config.mongodb.uri);
+//app.db.on('error', console.error.bind(console, 'mongoose connection error: '));
+//app.db.once('open', function () {
   //and... we have a data store
-});
+//});
 
 //setup sequelize
 var sqlstring = 'mysql://' + config.mysql.username + ':' + config.mysql.password + '@' + config.mysql.host + ':' + config.mysql.port + '/' + config.mysql.db;
@@ -60,6 +61,14 @@ sequelize
   } else {
     console.log('Sequelize_MySQL: Connection has been established successfully.');
   }
+});
+
+var sessionStore = new SessionStore({
+    host: config.mysql.host,
+    port: config.mysql.port,
+    user: config.mysql.username,
+    password: config.mysql.password,
+    database: config.mysql.db
 });
 
 
@@ -88,10 +97,15 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser(config.cryptoKey));
 app.use(session({
-  resave: true,
-  saveUninitialized: true,
+  //resave: true,
+  //saveUninitialized: true,
+  //secret: config.cryptoKey,
+  //store: new mongoStore({ url: config.mongodb.uri })
+  key: 'h3ll0',
   secret: config.cryptoKey,
-  store: new mongoStore({ url: config.mongodb.uri })
+  store: sessionStore,
+  resave: true,
+  saveUninitialized: true
 }));
 app.use(passport.initialize());
 app.use(passport.session());
