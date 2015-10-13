@@ -176,7 +176,7 @@ exports = module.exports = function(app, passport) {
         console.log('User deserialized.');
         console.dir(user);
 
-        done(err, user);
+        done(null, user);
 
     });
 
