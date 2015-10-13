@@ -20,6 +20,13 @@ exports.http500 = function(err, req, res, next){
   }
 
   if (req.xhr) {
+    console.log('http 500: ');
+    console.log('err: ');
+    console.dir(err);
+    console.log('req: ');
+    console.dir(req);
+    console.log('res: ');
+    console.dir(res);
     res.send({ error: 'Something went wrong.', details: data });
   }
   else {

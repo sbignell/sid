@@ -43,6 +43,7 @@ exports.check = function(req, res){
 
 exports.login = function(req, res){
   var workflow = req.app.utility.workflow(req, res);
+  console.log('reached login');
 
   workflow.on('validate', function() {
     if (!req.body.username) {
