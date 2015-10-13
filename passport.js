@@ -169,7 +169,7 @@ exports = module.exports = function(app, passport) {
     });*/
 
     //mysql
-    req.app.db.models.User.find({
+    app.db.models.User.findOne({
         where: {id: id} 
      })
     .then(function(err, user) {
