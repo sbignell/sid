@@ -29,7 +29,7 @@ exports = module.exports = function(sequelize, DataTypes) {
     resetPasswordExpires: { type: Date, default: '' },
     deactivatedTime: { type: Date }
   });
-  User.methods.canPlayRoleOf = function(role) {
+  User.canPlayRoleOf = function(role) {
     if (role === "admin" && this.roles.search("0,")) {
       return true;
     }
@@ -40,7 +40,7 @@ exports = module.exports = function(sequelize, DataTypes) {
 
     return false;
   };
-  User.methods.defaultReturnUrl = function() {
+  User.defaultReturnUrl = function() {
     var returnUrl = '/';
     if (this.canPlayRoleOf('account')) {
       returnUrl = '/account/';
