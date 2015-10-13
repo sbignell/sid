@@ -28,14 +28,16 @@ exports.init = function(req, res){
 exports.check = function(req, res){
 
   console.log('check user...');
+  console.dir(req.user);
 
-  /*if(req.isAuthenticated()){
+  if(req.isAuthenticated()){
+    console.dir('logged in');
     console.dir(req.user);
     res.send(JSON.stringify(req.user));
   } else {
     console.dir('not logged in');
     return '{error: not logged in}';
-  } */
+  } 
 
 };
 
