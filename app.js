@@ -38,6 +38,7 @@ app.config = config;
 
 // For HTTP web server
 app.server = http.createServer(app);
+app.db = {};
 
 //setup mongoose
 //app.db = mongoose.createConnection(config.mongodb.uri);
@@ -67,13 +68,13 @@ sequelize
 //config relational (mysql) data models
 require('./rdbms-models')(app, sequelize);
 
-/*var sessionStore = new SessionStore({
+var sessionStore = new SessionStore({
     host: config.mysql.host,
     port: config.mysql.port,
     user: config.mysql.username,
     password: config.mysql.password,
     database: config.mysql.db
-});*/
+});
 
 
 
