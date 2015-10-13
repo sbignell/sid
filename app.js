@@ -67,13 +67,13 @@ sequelize
 //config relational (mysql) data models
 require('./rdbms-models')(app, sequelize);
 
-var sessionStore = new SessionStore({
+/*var sessionStore = new SessionStore({
     host: config.mysql.host,
     port: config.mysql.port,
     user: config.mysql.username,
     password: config.mysql.password,
     database: config.mysql.db
-});
+});*/
 
 
 
