@@ -95,7 +95,8 @@ exports.create = function(req, res, next){
       name: req.body.name,
       notes: req.body.notes,
       rating: req.body.rating,
-      createdBy: req.user.id
+      createdById: req.body.createdById,
+      createdByName: req.body.createdByname
     });
     
     // persist an instance
