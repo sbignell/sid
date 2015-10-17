@@ -7,16 +7,13 @@ var config = require('./config'),
     bodyParser = require('body-parser'),
     session = require('express-session'),
     SessionStore = require('express-mysql-session'),
-    //mongoStore = require('connect-mongo')(session),
     Sequelize = require('sequelize'),
     //fs = require('fs'),
     //log = require('log'),
-    //mysql = require('mysql'),
     http = require('http'),
     //https = require('https'),
     path = require('path'),
     passport = require('passport'),
-    //mongoose = require('mongoose'),
     helmet = require('helmet'),
     csrf = require('csurf');
 
@@ -40,12 +37,6 @@ app.config = config;
 app.server = http.createServer(app);
 app.db = {};
 
-//setup mongoose
-//app.db = mongoose.createConnection(config.mongodb.uri);
-//app.db.on('error', console.error.bind(console, 'mongoose connection error: '));
-//app.db.once('open', function () {
-  //and... we have a data store
-//});
 
 //setup sequelize
 var sqlstring = 'mysql://' + config.mysql.username + ':' + config.mysql.password + '@' + config.mysql.host + ':' + config.mysql.port + '/' + config.mysql.db;
@@ -68,6 +59,7 @@ sequelize
 //config relational (mysql) data models
 require('./rdbms-models')(app, sequelize);
 
+//config session store in mysql
 var sessionStore = new SessionStore({
     host: config.mysql.host,
     port: config.mysql.port,
@@ -77,19 +69,10 @@ var sessionStore = new SessionStore({
 });
 
 
-
-//config nosql (mongodb) data models
-//require('./nosql-models')(app, mongoose);
-
-
-
-
-
 //settings
 app.disable('x-powered-by');
 app.set('port', config.port);
 app.set('views', path.join(__dirname, 'api')); //once we only send data does this go away? Needed for emails in login/forgot
-//app.set('views', path.join(__dirname, 'client')); 
 app.set('view engine', 'jade');
 
 //middleware
@@ -101,10 +84,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser(config.cryptoKey));
 app.use(session({
-  //resave: true,
-  //saveUninitialized: true,
-  //secret: config.cryptoKey,
-  //store: new mongoStore({ url: config.mongodb.uri })
   key: 'h3ll0',
   secret: config.cryptoKey,
   store: sessionStore,

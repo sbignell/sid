@@ -12,7 +12,7 @@ firstname VARCHAR(40),
 middlename VARCHAR(40) DEFAULT NULL,
 lastname VARCHAR(40),
 fullname VARCHAR(100),
-company VARCHAR(40) NOT NULL,
+company INT NOT NULL,
 roles VARCHAR(255),
 phone INT(20),
 createdById INT NOT NULL,
@@ -34,7 +34,7 @@ UNIQUE ( email )
 CREATE TABLE Roles (
 id INT NOT NULL AUTO_INCREMENT,
 name VARCHAR(40) NOT NULL,
-company VARCHAR(40) NOT NULL,
+company INT NOT NULL,
 createdById INT NOT NULL,
 createdByName VARCHAR(40) NOT NULL,
 createdAt TIMESTAMP,
@@ -45,7 +45,7 @@ PRIMARY KEY ( id )
 CREATE TABLE Groups (
 id INT NOT NULL AUTO_INCREMENT,
 name VARCHAR(40) NOT NULL,
-company VARCHAR(40) NOT NULL,
+company INT NOT NULL,
 createdById INT NOT NULL,
 createdByName VARCHAR(40) NOT NULL,
 createdAt TIMESTAMP,
@@ -88,9 +88,23 @@ PRIMARY KEY ( id )
 );
 
 INSERT INTO Users 
-( id, username, password, email, isActive, isVerified, company, createdById, createdByName, createdTime )
+( id, username, password, email, isActive, isVerified, company, roles, createdById, createdByName, createdAt )
 VALUES
-(1, 'root', '1234', 'youremail@address.com', 'yes', 'yes', 'Progress Labs', 1, 'root', now() );
+(0, 'root', '1234', 'youremail@address.com', 'yes', 'yes', 0, '0, 1', 0, 'root', now() );
 
-//Insert into roles..
-//Insert into companies
+INSERT INTO Roles 
+( id, name, company,createdById, createdByName, createdAt )
+VALUES
+(0, 'admin', 0, 0, 'root', now() ),
+(1, 'account', 0, 0, 'root', now() );
+
+INSERT INTO Companies 
+( id, name, createdById, createdByName, createdAt )
+VALUES
+(0, 'Sid and Sven', 0, 'root', now() );
+
+INSERT INTO Groups 
+( id, name, company, createdById, createdByName, createdAt )
+VALUES
+(0, 'all accounts', 0, 0, 'root', now() );
+

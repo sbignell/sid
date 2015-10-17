@@ -1,10 +1,7 @@
 'use strict';
 
 exports.port = process.env.PORT || 3001;
-exports.mongodb = {
-  uri: process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost:27017/sid'
-};
-exports.companyName = 'progress labs';
+exports.companyName = 'sid and sven';
 exports.projectName = 'sid';
 exports.systemEmail = 'your@email.addy';
 exports.cryptoKey = 'c@B3rnet5auv1gn0n!!';
@@ -15,8 +12,8 @@ exports.loginAttempts = {
 };
 exports.requireAccountVerification = false;
 exports.ssl = {
-  key: '/home/ec2-user/yourkey.pem',
-  cert: '/home/ec2-user/yourcrt.pem'
+  key: '/home/user/yourkey.pem',
+  cert: '/home/user/yourcrt.pem'
 };
 exports.smtp = {
   from: {
@@ -31,11 +28,11 @@ exports.smtp = {
   }
 };
 exports.mysql = {
-  host: process.env.MYSQL_HOST,
-  port: process.env.MYSQL_PORT,
-  db: 'sid', //process.env.DB,
-  username: process.env.MYSQL_USER,
-  password: process.env.MYSQL_PASS
+  host: process.env.MYSQL_HOST || 'localhost',
+  port: process.env.MYSQL_PORT || '3306',
+  db: process.env.DB || 'sidandsven',
+  username: process.env.MYSQL_USER || 'sid',
+  password: process.env.MYSQL_PASS || 'malbec'
 };
 exports.oauth = {
   twitter: {

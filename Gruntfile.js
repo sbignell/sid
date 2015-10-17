@@ -42,7 +42,6 @@ module.exports = function(grunt) {
           jshintrc: '.jshintrc-server'
         },
         src: [
-          'nosql-schema/**/*.js',
           'rdbms-schema/**/*.js',
           'api/**/*.js'
         ]

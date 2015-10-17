@@ -20,33 +20,6 @@ exports = module.exports = function(app, passport) {
         var conditions = { isActive: 'yes', email: username.toLowerCase() };
       }
 
-      //console.dir(app);
-
-      //mongo
-      /*app.db.models.User.findOne(conditions, function(err, user) {
-
-        if (err) {
-          return done(err);
-        }
-
-        if (!user) {
-          return done(null, false, { message: 'Unknown user' });
-        }
-
-        app.db.models.User.validatePassword(password, user.password, function(err, isValid) {
-          if (err) {
-            return done(err);
-          }
-
-          if (!isValid) {
-            return done(null, false, { message: 'Invalid password' });
-          }
-
-          return done(null, user);
-        });
-      });*/
-
-      //mysql
       app.db.models.User.findOne({
           where: conditions
        }).then(function(user) {
@@ -155,20 +128,7 @@ exports = module.exports = function(app, passport) {
   });
 
   passport.deserializeUser(function(id, done) {
-    //mongo
-    /*app.db.models.User.findOne({ _id: id }).populate('roles.admin').populate('roles.account').exec(function(err, user) {
 
-      if (user && user.roles && user.roles.admin) {
-        user.roles.admin.populate("groups", function(err, admin) {
-          done(err, user);
-        });
-      }
-      else {
-        done(err, user);
-      }
-    });*/
-
-    //mysql
     app.db.models.User.findOne({
         where: {id: id} 
      })
