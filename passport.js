@@ -23,8 +23,8 @@ exports = module.exports = function(app, passport) {
       app.db.models.User.findOne({
           where: conditions
        }).then(function(user) {
-          //console.log('User returned.');
-          //console.dir(user);
+          console.log('User returned.');
+          console.dir(user);
 
           if (!user) {
             return done(null, false, { message: 'Unknown user' });
@@ -124,11 +124,12 @@ exports = module.exports = function(app, passport) {
   }
 
   passport.serializeUser(function(user, done) {
+    console.log('passport.serializeUser');
     done(null, user.id);
   });
 
   passport.deserializeUser(function(id, done) {
-
+    console.log('passport.deserializeUser');
     app.db.models.User.findOne({
         where: {id: id} 
      })
