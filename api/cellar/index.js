@@ -13,7 +13,7 @@ exports.find = function(req, res, next){
    }).then(function(items) {
     
       console.log('Items returned.');
-      console.dir(items);
+      //console.dir(items);
       
       outcome.results = JSON.stringify(items);
 
@@ -21,7 +21,7 @@ exports.find = function(req, res, next){
 
         res.header('Cache-Control', 'no-cache, no-store, must-revalidate');
         console.log('sending xhr: ');
-        console.dir(outcome.results);
+        //console.dir(outcome.results);
         res.send(outcome.results);
       }
       else {
@@ -113,7 +113,7 @@ exports.create = function(req, res, next){
       .success(function(newWine) {
         // success callback
         console.log('Saved new wine: ' + newWine.id);
-        console.dir(newWine);
+        //console.dir(newWine);
         workflow.outcome.record = newWine;
         return workflow.emit('response');
       });
