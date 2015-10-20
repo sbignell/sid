@@ -141,8 +141,9 @@ exports.login = function(req, res){
             return workflow.emit('exception', err);
           }
           console.log('all good');
-          workflow.outcome.user.id = user.id;
-          workflow.outcome.user.username = user.username;
+          workflow.user = {};
+          workflow.user.id = user.id;
+          workflow.user.username = user.username;
           workflow.emit('response');
         });
       }
