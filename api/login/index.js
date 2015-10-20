@@ -140,10 +140,10 @@ exports.login = function(req, res){
             console.log('err');
             return workflow.emit('exception', err);
           }
-          console.log('all good');
-          workflow.user = {};
-          workflow.user.id = user.id;
-          workflow.user.username = user.username;
+          console.log('all good: ');
+          console.dir(user);
+          console.log('workflow..:');
+          console.dir(workflow);
           workflow.emit('response');
         });
       }
