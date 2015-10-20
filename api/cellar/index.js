@@ -2,9 +2,13 @@
 
 exports.find = function(req, res, next){
   var outcome = {};
+  var userid = '';
+  if(req.user){
+    userid = req.user.id;
+  }
 
   req.app.db.models.Wine.findAll({
-      where: { createdById: req.user.id || '' },
+      where: { createdById: userid },
       attributes: ['id', 'grape', 'estate', 'name', 'notes', 'rating', 'createdById']
    }).then(function(items) {
     
