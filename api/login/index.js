@@ -31,12 +31,13 @@ exports.check = function(req, res){
   //console.dir(req.user);
 
   if(req.isAuthenticated()){
-    console.dir('logged in');
+    console.log('check: logged in');
     //console.dir(req.user);
     res.send(JSON.stringify(req.user));
   } else {
-    console.dir('not logged in');
-    return '{error: not logged in}';
+    console.log('check: not logged in');
+    res.send('{}');
+    //return '{error: not logged in}';
   } 
 
 };
