@@ -2,7 +2,7 @@
 
 exports = module.exports = function(sequelize, DataTypes) {
   var User = sequelize.define('User', { 
-    id: { type: Number, default: '', autoIncrement: true },
+    id: { type: Number, default: '', primaryKey: true, autoIncrement: true },
     username: { type: String, unique: true },
     password: String,
     email: { type: String }, //, unique: true },
