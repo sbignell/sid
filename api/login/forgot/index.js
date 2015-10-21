@@ -80,7 +80,7 @@ exports.send = function(req, res, next){
             workflow.emit('sendEmail', token, user);
           });*/
 
-          user.updateAttributes({
+          user.update({//Attributes({
             resetPasswordToken: fieldsToSet.resetPasswordToken, 
             resetPasswordExpires: fieldsToSet.resetPasswordExpires
           }).success(function() {
