@@ -85,7 +85,7 @@ exports.set = function(req, res){
       user.updateAttributes({
         password: hash, 
         resetPasswordToken: ''
-      }).success(function() {
+      }).then(function() {
         console.log('reset: user updated with resetpw fields');
         workflow.emit('response');
       });
