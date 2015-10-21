@@ -2,7 +2,7 @@
 
 exports = module.exports = function(sequelize, DataTypes) {
   var Wine = sequelize.define('Wine', { 
-    id: { type: Number, default: '', autoIncrement: true },
+    id: { type: Number, default: '', primaryKey: true, autoIncrement: true },
     grape: { type: String, default: '' },
     estate: { type: String, default: '' },
     name: { type: String, default: '' },

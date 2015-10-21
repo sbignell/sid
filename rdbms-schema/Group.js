@@ -2,7 +2,7 @@
 
 exports = module.exports = function(sequelize, DataTypes) {
   var Group = sequelize.define('Group', { 	
-    id: { type: Number, default: '', autoIncrement: true },
+    id: { type: Number, default: '', primaryKey: true, autoIncrement: true },
     name: { type: String, default: '' },
     company: { type: Number, default: '' },
     createdById: { type: Number, default: '' },
