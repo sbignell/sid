@@ -86,6 +86,8 @@ exports.login = function(req, res){
             done(null, count);
           });
 
+          } else {
+            done(null, 0);
           }
 
           
