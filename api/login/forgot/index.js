@@ -61,15 +61,10 @@ exports.send = function(req, res, next){
       resetPasswordExpires: isotime //Date.now() + 10000000
     };
 
-     req.app.db.models.User.find({
+     req.app.db.models.User.findOne({
           where: conditions
        })
-      .error(function(err) {
-        // error callback
-        console.log('Couldnt find user: ' + err);
-        return workflow.emit('exception', err);
-      })
-      .success(function(user) {
+      .then(function(user) {
           console.log('User returned.');
           console.dir(user);
 
