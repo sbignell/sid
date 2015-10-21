@@ -130,12 +130,19 @@ exports.login = function(req, res){
               username: req.body.username
             }
          }).then(function(user){
-          var fieldsToSet = { ip: req.ip, user: user.id };
-            req.app.db.models.LoginAttempt.build(fieldsToSet).save().then(function(doc) {
+            if(user){
+              var fieldsToSet = { ip: req.ip, user: user.id };
+              req.app.db.models.LoginAttempt.build(fieldsToSet).save().then(function(doc) {
 
-            workflow.outcome.errors.push('Username and password combination not found or your account is inactive.');
-            return workflow.emit('response');
-            });
+              workflow.outcome.errors.push('Username and password combination not found or your account is inactive.');
+              return workflow.emit('response');
+              });
+
+            } else {
+              workflow.outcome.errors.push('Username and password combination not found or your account is inactive.');
+              return workflow.emit('response');
+            }
+          
           });
       }
       else {
