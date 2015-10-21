@@ -83,7 +83,7 @@ exports.send = function(req, res, next){
           user.update({//Attributes({
             resetPasswordToken: fieldsToSet.resetPasswordToken, 
             resetPasswordExpires: fieldsToSet.resetPasswordExpires
-          }).success(function() {
+          }).then(function() {
             console.log('forgot: user updated with resetpw fields');
             workflow.emit('sendEmail', token, user);
           });
