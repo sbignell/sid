@@ -62,10 +62,9 @@ exports.send = function(req, res, next){
     };
 
      req.app.db.models.User.findOne({
-          where: conditions
-       },
-      attributes: ['id', 'email'])
-      .then(function(user) {
+          where: conditions,
+          attributes: ['id', 'email']
+      }).then(function(user) {
           console.log('User returned.');
           console.dir(user);
 
