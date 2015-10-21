@@ -47,7 +47,7 @@ var sequelize = new Sequelize(sqlstring);
 //connect to mysql
 sequelize
 .authenticate()
-.complete(function(err) {
+.then(function(err) {
   if (!!err) {
     console.log('Sequelize_MySQL: Unable to connect to the database. ' + err);
   } else {
