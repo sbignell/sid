@@ -72,15 +72,21 @@ exports.send = function(req, res, next){
             return workflow.emit('exception', 'couldn\'t find user');
           }
 
-          var userId = user.id;
+          user.set(resetPasswordToken, fieldsToSet.resetPasswordToken);
+          user.set(resetPasswordExpires, fieldsToSet.resetPasswordExpires);
+          user.save().then(function(){
 
-          user.updateAttributes({
+            console.log('forgot: user updated with resetpw fields');
+            workflow.emit('sendEmail', token, user);
+          });
+
+          /*user.updateAttributes({
             resetPasswordToken: fieldsToSet.resetPasswordToken, 
             resetPasswordExpires: fieldsToSet.resetPasswordExpires
           }).success(function() {
             console.log('forgot: user updated with resetpw fields');
             workflow.emit('sendEmail', token, user);
-          });
+          });*/
 
           //create Resetpassword record
           /*var resetPW = req.app.db.models.ResetPassword.build({
