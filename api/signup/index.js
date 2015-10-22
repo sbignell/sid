@@ -91,7 +91,9 @@ exports.signup = function(req, res){
           return workflow.emit('exception', user);
         }
 
-        workflow.user = user;
+        workflow.outcome.userid = user.dataValues.id;
+        workflow.outcome.username = user.dataValues.username;
+        //workflow.user = user;
         workflow.emit('sendWelcomeEmail');
       });
     });
