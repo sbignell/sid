@@ -99,74 +99,33 @@ exports = module.exports = function(app, passport) {
   app.delete('/admin/administrators/:id/user/', require('./api/admin/administrators/index').unlinkUser);
   app.delete('/admin/administrators/:id/', require('./api/admin/administrators/index').delete);
 
-  //admin > admin groups
-  app.get('/admin/admin-groups/', require('./api/admin/admin-groups/index').find);
-  app.post('/admin/admin-groups/', require('./api/admin/admin-groups/index').create);
-  app.get('/admin/admin-groups/:id/', require('./api/admin/admin-groups/index').read);
-  app.put('/admin/admin-groups/:id/', require('./api/admin/admin-groups/index').update);
-  app.put('/admin/admin-groups/:id/permissions/', require('./api/admin/admin-groups/index').permissions);
-  app.delete('/admin/admin-groups/:id/', require('./api/admin/admin-groups/index').delete);
+  //profile
+  app.all('/profile*', ensureAuthenticated);
+  app.all('/profile*', ensureAccount);
+  app.get('/profile/', require('./api/profile/index').init);
 
-  //admin > accounts
-  app.get('/admin/accounts/', require('./api/admin/accounts/index').find);
-  app.post('/admin/accounts/', require('./api/admin/accounts/index').create);
-  app.get('/admin/accounts/:id/', require('./api/admin/accounts/index').read);
-  app.put('/admin/accounts/:id/', require('./api/admin/accounts/index').update);
-  app.put('/admin/accounts/:id/user/', require('./api/admin/accounts/index').linkUser);
-  app.delete('/admin/accounts/:id/user/', require('./api/admin/accounts/index').unlinkUser);
-  app.post('/admin/accounts/:id/notes/', require('./api/admin/accounts/index').newNote);
-  app.post('/admin/accounts/:id/status/', require('./api/admin/accounts/index').newStatus);
-  app.delete('/admin/accounts/:id/', require('./api/admin/accounts/index').delete);
+  //profile > settings
+  app.get('/profile/settings/', require('./api/profile/settings/index').init);
+  app.put('/profile/settings/', require('./api/profile/settings/index').update);
+  app.put('/profile/settings/identity/', require('./api/profile/settings/index').identity);
+  app.put('/profile/settings/password/', require('./api/profile/settings/index').password);
 
-  //admin > statuses
-  app.get('/admin/statuses/', require('./api/admin/statuses/index').find);
-  app.post('/admin/statuses/', require('./api/admin/statuses/index').create);
-  app.get('/admin/statuses/:id/', require('./api/admin/statuses/index').read);
-  app.put('/admin/statuses/:id/', require('./api/admin/statuses/index').update);
-  app.delete('/admin/statuses/:id/', require('./api/admin/statuses/index').delete);
-
-  //admin > categories
-  app.get('/admin/categories/', require('./api/admin/categories/index').find);
-  app.post('/admin/categories/', require('./api/admin/categories/index').create);
-  app.get('/admin/categories/:id/', require('./api/admin/categories/index').read);
-  app.put('/admin/categories/:id/', require('./api/admin/categories/index').update);
-  app.delete('/admin/categories/:id/', require('./api/admin/categories/index').delete);
-
-  //admin > search
-  app.get('/admin/search/', require('./api/admin/search/index').find);
-
-  //account
-  app.all('/account*', ensureAuthenticated);
-  app.all('/account*', ensureAccount);
-  app.get('/account/', require('./api/account/index').init);
-
-  //account > verification
-  app.get('/account/verification/', require('./api/account/verification/index').init);
-  app.post('/account/verification/', require('./api/account/verification/index').resendVerification);
-  app.get('/account/verification/:token/', require('./api/account/verification/index').verify);
-
-  //account > settings
-  app.get('/account/settings/', require('./api/account/settings/index').init);
-  app.put('/account/settings/', require('./api/account/settings/index').update);
-  app.put('/account/settings/identity/', require('./api/account/settings/index').identity);
-  app.put('/account/settings/password/', require('./api/account/settings/index').password);
-
-  //account > settings > social
-  app.get('/account/settings/twitter/', passport.authenticate('twitter', { callbackURL: '/account/settings/twitter/callback/' }));
-  app.get('/account/settings/twitter/callback/', require('./api/account/settings/index').connectTwitter);
-  app.get('/account/settings/twitter/disconnect/', require('./api/account/settings/index').disconnectTwitter);
-  app.get('/account/settings/github/', passport.authenticate('github', { callbackURL: '/account/settings/github/callback/' }));
-  app.get('/account/settings/github/callback/', require('./api/account/settings/index').connectGitHub);
-  app.get('/account/settings/github/disconnect/', require('./api/account/settings/index').disconnectGitHub);
-  app.get('/account/settings/facebook/', passport.authenticate('facebook', { callbackURL: '/account/settings/facebook/callback/' }));
-  app.get('/account/settings/facebook/callback/', require('./api/account/settings/index').connectFacebook);
-  app.get('/account/settings/facebook/disconnect/', require('./api/account/settings/index').disconnectFacebook);
-  app.get('/account/settings/google/', passport.authenticate('google', { callbackURL: '/account/settings/google/callback/', scope: ['profile email'] }));
-  app.get('/account/settings/google/callback/', require('./api/account/settings/index').connectGoogle);
-  app.get('/account/settings/google/disconnect/', require('./api/account/settings/index').disconnectGoogle);
-  app.get('/account/settings/tumblr/', passport.authenticate('tumblr', { callbackURL: '/account/settings/tumblr/callback/' }));
-  app.get('/account/settings/tumblr/callback/', require('./api/account/settings/index').connectTumblr);
-  app.get('/account/settings/tumblr/disconnect/', require('./api/account/settings/index').disconnectTumblr);
+  //profile > settings > social
+  app.get('/profile/settings/twitter/', passport.authenticate('twitter', { callbackURL: '/profile/settings/twitter/callback/' }));
+  app.get('/profile/settings/twitter/callback/', require('./api/profile/settings/index').connectTwitter);
+  app.get('/profile/settings/twitter/disconnect/', require('./api/profile/settings/index').disconnectTwitter);
+  app.get('/profile/settings/github/', passport.authenticate('github', { callbackURL: '/profile/settings/github/callback/' }));
+  app.get('/profile/settings/github/callback/', require('./api/profile/settings/index').connectGitHub);
+  app.get('/profile/settings/github/disconnect/', require('./api/profile/settings/index').disconnectGitHub);
+  app.get('/profile/settings/facebook/', passport.authenticate('facebook', { callbackURL: '/profile/settings/facebook/callback/' }));
+  app.get('/profile/settings/facebook/callback/', require('./api/profile/settings/index').connectFacebook);
+  app.get('/profile/settings/facebook/disconnect/', require('./api/profile/settings/index').disconnectFacebook);
+  app.get('/profile/settings/google/', passport.authenticate('google', { callbackURL: '/profile/settings/google/callback/', scope: ['profile email'] }));
+  app.get('/profile/settings/google/callback/', require('./api/profile/settings/index').connectGoogle);
+  app.get('/profile/settings/google/disconnect/', require('./api/profile/settings/index').disconnectGoogle);
+  app.get('/profile/settings/tumblr/', passport.authenticate('tumblr', { callbackURL: '/profile/settings/tumblr/callback/' }));
+  app.get('/profile/settings/tumblr/callback/', require('./api/profile/settings/index').connectTumblr);
+  app.get('/profile/settings/tumblr/disconnect/', require('./api/profile/settings/index').disconnectTumblr);
 
   //Wine app
   app.get('/cellar/', require('./api/cellar/index').find);
