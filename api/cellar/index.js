@@ -32,7 +32,7 @@ exports.find = function(req, res, next){
 
 };
 
-exports.read = function(req, res, next){
+/*exports.read = function(req, res, next){
   var outcome = {};
 
   var getStatusOptions = function(callback) {
@@ -76,7 +76,7 @@ exports.read = function(req, res, next){
   };
 
   require('async').parallel([getStatusOptions, getRecord], asyncFinally);
-};
+};*/
 
 exports.create = function(req, res, next){
   var workflow = req.app.utility.workflow(req, res);
