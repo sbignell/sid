@@ -20,6 +20,7 @@ exports.signup = function(req, res){
   var workflow = req.app.utility.workflow(req, res);
 
   workflow.on('validate', function() {
+    console.dir(req.body);
     if (!req.body.username) {
       workflow.outcome.errfor.username = 'required';
     }
@@ -27,12 +28,12 @@ exports.signup = function(req, res){
       workflow.outcome.errfor.username = 'only use letters, numbers, \'-\', \'_\'';
     }
 
-    /*if (!req.body.email) {
+    if (!req.body.email) {
       workflow.outcome.errfor.email = 'required';
     }
     else if (!/^[a-zA-Z0-9\-\_\.\+]+@[a-zA-Z0-9\-\_\.]+\.[a-zA-Z0-9\-\_]+$/.test(req.body.email)) {
       workflow.outcome.errfor.email = 'invalid email format';
-    }*/
+    }
 
     if (!req.body.password) {
       workflow.outcome.errfor.password = 'required';
@@ -47,9 +48,11 @@ exports.signup = function(req, res){
   });
 
   workflow.on('duplicateUsernameCheck', function() {
-    req.app.db.models.User.find({ where: { username: req.body.username } }, function(err, user) {
-      if (err) {
-        return workflow.emit('exception', err);
+    console.log('duplicateUsernameCheck');
+    req.app.db.models.User.find({ where: { username: req.body.username } }).then(function(user) {
+
+      if (!user) {
+        return workflow.emit('exception', user);
       }
 
       if (user) {
@@ -61,10 +64,11 @@ exports.signup = function(req, res){
     });
   });
 
-  /*workflow.on('duplicateEmailCheck', function() {
-    req.app.db.models.User.findOne({ email: req.body.email.toLowerCase() }, function(err, user) {
-      if (err) {
-        return workflow.emit('exception', err);
+  workflow.on('duplicateEmailCheck', function() {
+    console.log('duplicateEmailCheck');
+    req.app.db.models.User.findOne({ email: req.body.email.toLowerCase() }).then(function(user) {
+      if (!user) {
+        return workflow.emit('exception', user);
       }
 
       if (user) {
@@ -85,20 +89,16 @@ exports.signup = function(req, res){
       var fieldsToSet = {
         isActive: 'yes',
         username: req.body.username,
-        //email: req.body.email.toLowerCase(),
-        password: hash,
-        search: [
-          req.body.username,
-          req.body.email
-        ]
+        email: req.body.email.toLowerCase(),
+        password: hash
       };
-      req.app.db.models.User.create(fieldsToSet, function(err, user) {
-        if (err) {
-          return workflow.emit('exception', err);
+      req.app.db.models.User.create(fieldsToSet).then(function(user) {
+        if (!user) {
+          return workflow.emit('exception', user);
         }
 
         workflow.user = user;
-        workflow.emit('createAccount');
+        workflow.emit('sendWelcomeEmail');
       });
     });
   });
