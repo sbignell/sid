@@ -93,43 +93,10 @@ exports.signup = function(req, res){
 
         workflow.outcome.userid = user.dataValues.id;
         workflow.outcome.username = user.dataValues.username;
-        //workflow.user = user;
         workflow.emit('sendWelcomeEmail');
       });
     });
   });
-
-  //create a user<->account role record
-
-  /*workflow.on('createAccount', function() {
-    var fieldsToSet = {
-      isVerified: req.app.config.requireAccountVerification ? 'no' : 'yes',
-      'name.full': workflow.user.username,
-      user: {
-        id: workflow.user._id,
-        name: workflow.user.username
-      },
-      search: [
-        workflow.user.username
-      ]
-    };
-
-    req.app.db.models.Account.create(fieldsToSet, function(err, account) {
-      if (err) {
-        return workflow.emit('exception', err);
-      }
-
-      //update user with account
-      workflow.user.roles.account = account._id;
-      workflow.user.save(function(err, user) {
-        if (err) {
-          return workflow.emit('exception', err);
-        }
-
-        workflow.emit('sendWelcomeEmail');
-      });
-    });
-  });*/
 
   workflow.on('sendWelcomeEmail', function() {
     req.app.utility.sendmail(req, res, {
@@ -141,7 +108,7 @@ exports.signup = function(req, res){
       locals: {
         username: req.body.username,
         email: req.body.email,
-        loginURL: req.protocol +'://'+ req.headers.host +'/login/',
+        loginURL: req.protocol +'://'+ req.headers.host +'/',
         projectName: req.app.config.projectName
       },
       success: function(message) {
