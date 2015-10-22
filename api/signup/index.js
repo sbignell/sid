@@ -63,7 +63,7 @@ exports.signup = function(req, res){
 
   workflow.on('duplicateEmailCheck', function() {
     console.log('duplicateEmailCheck');
-    req.app.db.models.User.findOne({ email: req.body.email.toLowerCase() }).then(function(user) {
+    req.app.db.models.User.findOne({ where: { email: req.body.email.toLowerCase() } }).then(function(user) {
 
       if (user) {
         workflow.outcome.errfor.email = 'email already registered';
