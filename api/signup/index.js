@@ -78,7 +78,7 @@ exports.signup = function(req, res){
 
       workflow.emit('createUser');
     });
-  });*/
+  });
 
   workflow.on('createUser', function() {
     req.app.db.models.User.encryptPassword(req.body.password, function(err, hash) {
