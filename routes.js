@@ -33,8 +33,9 @@ function ensureAccount(req, res, next) {
 
 exports = module.exports = function(app, passport) {
 
-
+  //signup
   app.post('/api/v1/signup/', require('./api/signup/index').signup);
+  app.post('/api/v1/signup/verify/', require('./api/signup/index').signupVerification);
 
   //social sign up
   app.post('/signup/social/', require('./api/signup/index').signupSocial);

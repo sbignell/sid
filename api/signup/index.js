@@ -79,6 +79,8 @@ exports.signup = function(req, res){
       if (err) {
         return workflow.emit('exception', err);
       }
+      
+      //we need to set a verification timeframe.. and role etc
 
       var fieldsToSet = {
         isActive: 'yes',
@@ -145,6 +147,13 @@ exports.signup = function(req, res){
   });
 
   workflow.emit('validate');
+};
+
+exports.signupVerification = function(req, res){
+
+  console.log('signupVerification');
+
+  
 };
 
 exports.signupTwitter = function(req, res, next) {
