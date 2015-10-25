@@ -159,6 +159,9 @@ exports.login = function(req, res){
           console.log('all good: ');
           workflow.outcome.userid = user.dataValues.id;
           workflow.outcome.username = user.dataValues.username;
+          workflow.outcome.roles = user.dataValues.roles;
+          workflow.outcome.firstname = user.dataValues.firstname;
+          workflow.outcome.lastname = user.dataValues.lastname;
           workflow.emit('response');
         });
       }
