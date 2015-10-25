@@ -64,7 +64,7 @@ exports.login = function(req, res){
 
   workflow.on('abuseFilter', function() {
     var getIpCount = function(done) {
-      var conditions = { ip: req.ip };
+      var conditions = { ip: req.ip, createdAt > now() - req.app.config.loginAttempts.logExpiration };
       req.app.db.models.LoginAttempt.count({where: conditions}).then(function(count) {
 
         done(null, count);
@@ -80,7 +80,7 @@ exports.login = function(req, res){
        }).then(function(user){
 
           if(user){
-            var conditions = { ip: req.ip, userId: user.id };
+            var conditions = { ip: req.ip, userId: user.id, createdAt > now() - req.app.config.loginAttempts.logExpiration };
             req.app.db.models.LoginAttempt.count({where: conditions}).then(function(count) {
 
             done(null, count);

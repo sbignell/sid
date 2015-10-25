@@ -8,7 +8,7 @@ exports.cryptoKey = 'c@B3rnet5auv1gn0n!!';
 exports.loginAttempts = {
   forIp: 50,
   forIpAndUser: 7,
-  logExpiration: '20m'
+  logExpiration: '20' //in min
 };
 exports.requireAccountVerification = false;
 exports.ssl = {
