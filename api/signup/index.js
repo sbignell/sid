@@ -220,7 +220,17 @@ exports.signupGitHub = function(req, res, next) {
 };
 
 exports.signupFacebook = function(req, res, next) {
-  req._passport.instance.authenticate('facebook', { callbackURL: '/signup/facebook/callback/' }, function(err, user, info) {
+  req._passport.instance.authenticate('facebook', { callbackURL: '/api/v1/signup/facebook/callback/' }, function(err, user, info) {
+    
+    console.log('signupFacebook: err');
+    console.dir(err);
+
+    console.log('signupFacebook: user');
+    console.dir(user);
+
+    console.log('signupFacebook: info');
+    console.dir(info);
+
     if (!info || !info.profile) {
       return res.redirect('/signup/');
     }
