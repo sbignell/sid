@@ -51,7 +51,7 @@ exports.send = function(req, res, next){
     console.log('patchUser');
     var isotime = new Date();
     isotime.setHours(isotime.getHours() + 4);
-    isotime = isotime.toISOString();
+    isotime = isotime.toISOString().slice(0, 19).replace('T', ' ');
     console.log('isotime: ' + isotime);
     console.log('token: ' + token + ', hash: ' + hash);
 

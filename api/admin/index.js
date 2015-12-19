@@ -1,8 +1,8 @@
 'use strict';
 
-exports.init = function(req, res, next){
+/*exports.init = function(req, res, next){
   var sigma = {};
-  var collections = ['User', 'Account', 'Admin', 'AdminGroup', 'Category', 'Status'];
+  var collections = ['User'];
   var queries = [];
 
   collections.forEach(function(el, i, arr) {
@@ -27,4 +27,30 @@ exports.init = function(req, res, next){
   };
 
   require('async').parallel(queries, asyncFinally);
+};*/
+
+exports.allwines = function(req, res, next){
+
+req.app.db.models.Wine.findAll({
+      attributes: ['id', 'rating', 'createdById']
+   }).then(function(items) {
+    
+      console.log('Items returned.');
+      //console.dir(items);
+      
+      var results = JSON.stringify(items.length);
+
+      if (req.xhr) {
+
+        res.header('Cache-Control', 'no-cache, no-store, must-revalidate');
+        console.log('sending xhr: ');
+        //console.dir(outcome.results);
+        res.send(results);
+      }
+      else {
+        //?
+      }
+ 
+  });
+
 };

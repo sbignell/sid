@@ -32,52 +32,6 @@ exports.find = function(req, res, next){
 
 };
 
-/*exports.read = function(req, res, next){
-  var outcome = {};
-
-  var getStatusOptions = function(callback) {
-    req.app.db.models.Status.find({ pivot: 'Account' }, 'name').sort('name').exec(function(err, statuses) {
-      if (err) {
-        return callback(err, null);
-      }
-
-      outcome.statuses = statuses;
-      return callback(null, 'done');
-    });
-  };
-
-  var getRecord = function(callback) {
-    req.app.db.models.Account.findById(req.params.id).exec(function(err, record) {
-      if (err) {
-        return callback(err, null);
-      }
-
-      outcome.record = record;
-      return callback(null, 'done');
-    });
-  };
-
-  var asyncFinally = function(err, results) {
-    if (err) {
-      return next(err);
-    }
-
-    if (req.xhr) {
-      res.send(outcome.record);
-    }
-    else {
-      res.render('admin/accounts/details', {
-        data: {
-          record: escape(JSON.stringify(outcome.record)),
-          statuses: outcome.statuses
-        }
-      });
-    }
-  };
-
-  require('async').parallel([getStatusOptions, getRecord], asyncFinally);
-};*/
-
 exports.create = function(req, res, next){
   var workflow = req.app.utility.workflow(req, res);
 
@@ -105,12 +59,7 @@ exports.create = function(req, res, next){
     
     // persist an instance
     wine.save()
-      .error(function(err) {
-        // error callback
-        console.log('Couldnt save it: ' + err);
-        return workflow.emit('exception', err);
-      })
-      .success(function(newWine) {
+      .then(function(newWine) {
         // success callback
         console.log('Saved new wine: ' + newWine.id);
         //console.dir(newWine);
@@ -123,7 +72,7 @@ exports.create = function(req, res, next){
   workflow.emit('validate');
 };
 
-exports.update = function(req, res, next){
+/*exports.update = function(req, res, next){
   var workflow = req.app.utility.workflow(req, res);
 
   workflow.on('validate', function() {
@@ -174,7 +123,7 @@ exports.update = function(req, res, next){
   });
 
   workflow.emit('validate');
-};
+};*/
 
 exports.delete = function(req, res, next){
   var workflow = req.app.utility.workflow(req, res);
@@ -200,23 +149,14 @@ exports.delete = function(req, res, next){
     });*/
 
     var obj = Wine.find({ where: {id: req.params.id} })
-    .error(function(err) {
-      // error callback
-      console.log('Couldnt find it: ' + err);
-    })
-    .success(function(wine) {
+    .then(function(wine) {
       // success callback
       console.log('Found wine: ');
       console.log(JSON.stringify(wine));
 
 
          wine.destroy()
-         .error(function(err) {
-          // error callback
-          console.log('Couldnt delete it: ' + err);
-          return workflow.emit('exception', err);
-        })
-         .success(function() {
+         .then(function() {
             // now i'm gone :)
            console.log('Deleted wine');
            workflow.emit('response');

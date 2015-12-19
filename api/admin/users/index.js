@@ -1,49 +1,28 @@
 'use strict';
 
 exports.find = function(req, res, next){
-  req.query.username = req.query.username ? req.query.username : '';
-  req.query.limit = req.query.limit ? parseInt(req.query.limit, null) : 20;
-  req.query.page = req.query.page ? parseInt(req.query.page, null) : 1;
-  req.query.sort = req.query.sort ? req.query.sort : '_id';
+  
 
-  var filters = {};
-  if (req.query.username) {
-    filters.username = new RegExp('^.*?'+ req.query.username +'.*$', 'i');
-  }
+  req.app.db.models.User.findAll({
+      attributes: ['id', 'username', 'email', 'firstname', 'lastname', 'isActive', 'isVerified', 'roles', 'groups', 'phone', 'createdById', 'twitterKey', 'facebookKey', 'googleKey', 'githubKey']
+   }).then(function(items) {
+    
+      console.log('Items returned.');
+      var results = JSON.stringify(items);
 
-  if (req.query.isActive) {
-    filters.isActive = req.query.isActive;
-  }
+      if (req.xhr) {
 
-  if (req.query.roles && req.query.roles === 'admin') {
-    filters['roles.admin'] = { $exists: true };
-  }
+        res.header('Cache-Control', 'no-cache, no-store, must-revalidate');
+        console.log('sending xhr: ');
 
-  if (req.query.roles && req.query.roles === 'account') {
-    filters['roles.account'] = { $exists: true };
-  }
-
-  req.app.db.models.User.pagedFind({
-    filters: filters,
-    keys: 'username email isActive',
-    limit: req.query.limit,
-    page: req.query.page,
-    sort: req.query.sort
-  }, function(err, results) {
-    if (err) {
-      return next(err);
-    }
-
-    if (req.xhr) {
-      res.header("Cache-Control", "no-cache, no-store, must-revalidate");
-      results.filters = req.query;
-      res.send(results);
-    }
-    else {
-      results.filters = req.query;
-      res.render('admin/users/index', { data: { results: JSON.stringify(results) } });
-    }
+        res.send(results);
+      }
+      else {
+        //?
+      }
+ 
   });
+
 };
 
 exports.read = function(req, res, next){
@@ -64,6 +43,10 @@ exports.read = function(req, res, next){
 exports.create = function(req, res, next){
   var workflow = req.app.utility.workflow(req, res);
 
+  console.log('user create: ');
+  console.dir(req.body);
+
+
   workflow.on('validate', function() {
     if (!req.body.username) {
       workflow.outcome.errors.push('Please enter a username.');
@@ -79,10 +62,9 @@ exports.create = function(req, res, next){
   });
 
   workflow.on('duplicateUsernameCheck', function() {
-    req.app.db.models.User.findOne({ username: req.body.username }, function(err, user) {
-      if (err) {
-        return workflow.emit('exception', err);
-      }
+    req.app.db.models.User.findOne({ where: { username: req.body.username }}).then(function(user) {
+      console.log('user returned is: ');
+      console.dir(user);
 
       if (user) {
         workflow.outcome.errors.push('That username is already taken.');
@@ -94,20 +76,26 @@ exports.create = function(req, res, next){
   });
 
   workflow.on('createUser', function() {
-    var fieldsToSet = {
-      username: req.body.username,
-      search: [
-        req.body.username
-      ]
-    };
-    req.app.db.models.User.create(fieldsToSet, function(err, user) {
-      if (err) {
-        return workflow.emit('exception', err);
-      }
+    console.log('reached createUser');
 
-      workflow.outcome.record = user;
-      return workflow.emit('response');
+    var user = req.app.db.models.User.build({
+      username: req.body.username,
+      email: req.body.email,
+      roles: req.body.roles,
+      createdById: req.body.createdById,
+      isActive: 'yes',
+      isVerified: 'no',
     });
+    
+    // persist an instance
+    user.save()
+      .then(function(newUser) {
+        // success callback
+        console.log('Saved new user: ' + newUser.username);
+        //console.dir(newUser);
+        workflow.outcome.record = newUser;
+        return workflow.emit('response');
+      });
   });
 
   workflow.emit('validate');
@@ -117,9 +105,6 @@ exports.update = function(req, res, next){
   var workflow = req.app.utility.workflow(req, res);
 
   workflow.on('validate', function() {
-    if (!req.body.isActive) {
-      req.body.isActive = 'no';
-    }
 
     if (!req.body.username) {
       workflow.outcome.errfor.username = 'required';
@@ -139,111 +124,35 @@ exports.update = function(req, res, next){
       return workflow.emit('response');
     }
 
-    workflow.emit('duplicateUsernameCheck');
-  });
-
-  workflow.on('duplicateUsernameCheck', function() {
-    req.app.db.models.User.findOne({ username: req.body.username, _id: { $ne: req.params.id } }, function(err, user) {
-      if (err) {
-        return workflow.emit('exception', err);
-      }
-
-      if (user) {
-        workflow.outcome.errfor.username = 'username already taken';
-        return workflow.emit('response');
-      }
-
-      workflow.emit('duplicateEmailCheck');
-    });
-  });
-
-  workflow.on('duplicateEmailCheck', function() {
-    req.app.db.models.User.findOne({ email: req.body.email.toLowerCase(), _id: { $ne: req.params.id } }, function(err, user) {
-      if (err) {
-        return workflow.emit('exception', err);
-      }
-
-      if (user) {
-        workflow.outcome.errfor.email = 'email already taken';
-        return workflow.emit('response');
-      }
-
-      workflow.emit('patchUser');
-    });
+    workflow.emit('patchUser');
   });
 
   workflow.on('patchUser', function() {
     var fieldsToSet = {
+      firstname: req.body.firstname,
+      lastname: req.body.lastname,
       isActive: req.body.isActive,
-      username: req.body.username,
-      email: req.body.email.toLowerCase(),
-      search: [
-        req.body.username,
-        req.body.email
-      ]
+      isVerified: req.body.isVerified,
+      roles: req.body.roles,
+      groups: req.body.groups,
+      phone: req.body.phone,
+      twitterKey: req.body.twitterKey,
+      facebookKey: req.body.facebookKey,
+      googleKey: req.body.googleKey,
+      githubKey: req.body.githubKey
     };
 
-    req.app.db.models.User.findByIdAndUpdate(req.params.id, fieldsToSet, function(err, user) {
-      if (err) {
-        return workflow.emit('exception', err);
-      }
+    req.app.db.models.User.find({ where: { id: req.body.id } }).then(function(user) {
+      user.update(fieldsToSet).then(function(savedUser){
+        console.log('saved.');
+        workflow.outcome.user = savedUser;
+        workflow.emit('response');
+      })
 
-      workflow.emit('patchAdmin', user);
+      
     });
   });
 
-  workflow.on('patchAdmin', function(user) {
-    if (user.roles.admin) {
-      var fieldsToSet = {
-        user: {
-          id: req.params.id,
-          name: user.username
-        }
-      };
-      req.app.db.models.Admin.findByIdAndUpdate(user.roles.admin, fieldsToSet, function(err, admin) {
-        if (err) {
-          return workflow.emit('exception', err);
-        }
-
-        workflow.emit('patchAccount', user);
-      });
-    }
-    else {
-      workflow.emit('patchAccount', user);
-    }
-  });
-
-  workflow.on('patchAccount', function(user) {
-    if (user.roles.account) {
-      var fieldsToSet = {
-        user: {
-          id: req.params.id,
-          name: user.username
-        }
-      };
-      req.app.db.models.Account.findByIdAndUpdate(user.roles.account, fieldsToSet, function(err, account) {
-        if (err) {
-          return workflow.emit('exception', err);
-        }
-
-        workflow.emit('populateRoles', user);
-      });
-    }
-    else {
-      workflow.emit('populateRoles', user);
-    }
-  });
-
-  workflow.on('populateRoles', function(user) {
-    user.populate('roles.admin roles.account', 'name.full', function(err, populatedUser) {
-      if (err) {
-        return workflow.emit('exception', err);
-      }
-
-      workflow.outcome.user = populatedUser;
-      workflow.emit('response');
-    });
-  });
 
   workflow.emit('validate');
 };
@@ -623,29 +532,45 @@ exports.unlinkAccount = function(req, res, next){
 
 exports.delete = function(req, res, next){
   var workflow = req.app.utility.workflow(req, res);
+  var User = req.app.db.models.User;
+
+  console.log('cookie: ');
+  console.dir(req.signedCookies);
 
   workflow.on('validate', function() {
-    if (!req.user.roles.admin.isMemberOf('root')) {
+    /*if (not admin) {
       workflow.outcome.errors.push('You may not delete users.');
       return workflow.emit('response');
-    }
+    }*/
 
-    if (req.user._id === req.params.id) {
-      workflow.outcome.errors.push('You may not delete yourself from user.');
+    /*if (not root) {
+      workflow.outcome.errors.push('You may not delete admins.');
       return workflow.emit('response');
-    }
+    }*/
 
     workflow.emit('deleteUser');
   });
 
-  workflow.on('deleteUser', function(err) {
-    req.app.db.models.User.findByIdAndRemove(req.params.id, function(err, user) {
-      if (err) {
-        return workflow.emit('exception', err);
-      }
+  workflow.on('deleteUser', function() {
+    
+    var obj = User.find({ where: {id: req.params.id} })
+    .then(function(user) {
+      // success callback
+      console.log('Found user: ');
+      console.log(JSON.stringify(user));
 
-      workflow.emit('response');
+
+         user.destroy()
+         .then(function() {
+            // now i'm gone :)
+           console.log('Deleted user');
+           workflow.emit('response');
+        });
+
     });
+
+
+
   });
 
   workflow.emit('validate');

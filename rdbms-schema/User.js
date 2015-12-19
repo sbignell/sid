@@ -13,11 +13,10 @@ exports = module.exports = function(sequelize, DataTypes) {
     middlename: { type: String, default: '' },
     lastname: { type: String, default: '' },
     fullname: { type: String, default: '' },
-    company: { type: String, default: '' },
     roles: { type: String, default: '' },
+    groups: { type: String, default: '' },
     phone: { type: String, default: '' },
     createdById: { type: String, default: '' },
-    createdByName: { type: String, default: '' },
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now },
     twitterKey: { type: String, default: '' },
@@ -31,7 +30,7 @@ exports = module.exports = function(sequelize, DataTypes) {
   },{
     instanceMethods: {
       canPlayRoleOf: function(role) {
-        if (role === "admin" && this.roles.search("0,")) {
+        if (role === "admin" && this.roles.search("0,")+1) {
           return true;
         }
 

@@ -31,8 +31,8 @@ exports.mysql = {
   host: process.env.MYSQL_HOST || 'localhost',
   port: process.env.MYSQL_PORT || '3306',
   db: process.env.DB || 'sidandsven',
-  username: process.env.MYSQL_USER || 'sid',
-  password: process.env.MYSQL_PASS || 'malbec'
+  username: process.env.MYSQL_USERNAME || 'sid',
+  password: process.env.MYSQL_PASSWORD || 'malbec'
 };
 exports.oauth = {
   twitter: {

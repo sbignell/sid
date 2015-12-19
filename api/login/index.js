@@ -162,6 +162,14 @@ exports.login = function(req, res){
           workflow.outcome.roles = user.dataValues.roles;
           workflow.outcome.firstname = user.dataValues.firstname;
           workflow.outcome.lastname = user.dataValues.lastname;
+          workflow.outcome.isActive = user.dataValues.isActive;
+          workflow.outcome.isVerified = user.dataValues.isVerified;
+          workflow.outcome.groups = user.dataValues.groups;
+          workflow.outcome.phone = user.dataValues.phone;
+          workflow.outcome.twitterKey = user.dataValues.twitterKey;
+          workflow.outcome.facebookKey = user.dataValues.facebookKey;
+          workflow.outcome.googleKey = user.dataValues.googleKey;
+          workflow.outcome.githubKey = user.dataValues.githubKey;
           workflow.emit('response');
         });
       }

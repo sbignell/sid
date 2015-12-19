@@ -9,7 +9,6 @@ exports = module.exports = function(sequelize, DataTypes) {
     notes: { type: String, default: '' },
     rating: { type: String, default: '' },
     createdById: { type: String, default: '' },
-    createdByName: { type: String, default: '' },
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now }
   });
