@@ -59,7 +59,8 @@ exports.login = function(req, res){
       return workflow.emit('response');
     }
 
-    workflow.emit('abuseFilter');
+    //workflow.emit('abuseFilter');
+    workflow.emit('attemptLogin');
   });
 
   workflow.on('abuseFilter', function() {
