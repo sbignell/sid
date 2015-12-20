@@ -39,15 +39,15 @@ exports = module.exports = function(app, passport) {
 
   //social sign up
   app.post('/api/v1/signup/social/', require('./api/signup/index').signupSocial);
-  app.post('/api/v1/signup/twitter/', passport.authenticate('twitter', { callbackURL: '/api/v1/signup/twitter/callback/' }));
+  app.get('/api/v1/signup/twitter/', passport.authenticate('twitter', { callbackURL: '/api/v1/signup/twitter/callback/' }));
   app.get('/api/v1/signup/twitter/callback/', require('./api/signup/index').signupTwitter);
-  app.post('/api/v1/signup/github/', passport.authenticate('github', { callbackURL: '/api/v1/signup/github/callback/', scope: ['user:email'] }));
+  app.get('/api/v1/signup/github/', passport.authenticate('github', { callbackURL: '/api/v1/signup/github/callback/', scope: ['user:email'] }));
   app.get('/api/v1/signup/github/callback/', require('./api/signup/index').signupGitHub);
-  app.post('/api/v1/signup/facebook/', passport.authenticate('facebook', { callbackURL: '/api/v1/signup/facebook/callback/', scope: ['email'] }));
+  app.get('/api/v1/signup/facebook/', passport.authenticate('facebook', { callbackURL: '/api/v1/signup/facebook/callback/', scope: ['email'] }));
   app.get('/api/v1/signup/facebook/callback/', require('./api/signup/index').signupFacebook);
-  app.post('/api/v1/signup/google/', passport.authenticate('google', { callbackURL: '/api/v1/signup/google/callback/', scope: ['profile email'] }));
+  app.get('/api/v1/signup/google/', passport.authenticate('google', { callbackURL: '/api/v1/signup/google/callback/', scope: ['profile email'] }));
   app.get('/api/v1/signup/google/callback/', require('./api/signup/index').signupGoogle);
-  app.post('/api/v1/signup/tumblr/', passport.authenticate('tumblr', { callbackURL: '/api/v1/signup/tumblr/callback/' }));
+  app.get('/api/v1/signup/tumblr/', passport.authenticate('tumblr', { callbackURL: '/api/v1/signup/tumblr/callback/' }));
   app.get('/api/v1/signup/tumblr/callback/', require('./api/signup/index').signupTumblr);
 
   //login/out
