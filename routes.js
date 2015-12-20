@@ -38,6 +38,7 @@ exports = module.exports = function(app, passport) {
   app.post('/api/v1/signup/verify/', require('./api/signup/index').signupVerification);
 
   //social sign up
+  /*
   app.post('/api/v1/signup/social/', require('./api/signup/index').signupSocial);
   app.get('/api/v1/signup/twitter/', passport.authenticate('twitter', { callbackURL: '/api/v1/signup/twitter/callback/' }));
   app.get('/api/v1/signup/twitter/callback/', require('./api/signup/index').signupTwitter);
@@ -49,6 +50,7 @@ exports = module.exports = function(app, passport) {
   app.get('/api/v1/signup/google/callback/', require('./api/signup/index').signupGoogle);
   app.get('/api/v1/signup/tumblr/', passport.authenticate('tumblr', { callbackURL: '/api/v1/signup/tumblr/callback/' }));
   app.get('/api/v1/signup/tumblr/callback/', require('./api/signup/index').signupTumblr);
+  */
 
   //login/out
   app.post('/api/v1/login/', require('./api/login/index').login);
