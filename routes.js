@@ -126,7 +126,9 @@ exports = module.exports = function(app, passport) {
   //Wine app
   app.get('/api/v1/cellar/', require('./api/cellar/index').find);
   app.post('/api/v1/cellar/', require('./api/cellar/index').create);
+  app.put('/api/v1/cellar/:id', require('./api/cellar/index').update);
   app.delete('/api/v1/cellar/:id', require('./api/cellar/index').delete);
+  app.get('/api/v1/cellar/:id', require('./api/cellar/index').findOne);
 
   //route not found
   app.all('*', require('./api/http/index').http404);

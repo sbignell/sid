@@ -32,6 +32,42 @@ exports.find = function(req, res, next){
 
 };
 
+exports.findOne = function(req, res, next){
+  console.log('Retrieving details of individual item.');
+  var outcome = {};
+  var userid = '';
+  if(req.user){
+    userid = req.user.id;
+  }
+
+  req.app.db.models.Wine.findOne({
+      where: { 
+        createdById: userid,
+        id: req.params.id
+       },
+      attributes: ['id', 'grape', 'estate', 'name', 'notes', 'rating', 'createdById']
+   }).then(function(item) {
+    
+      console.log('Item returned.');
+      console.dir(item);
+      
+      outcome.results = JSON.stringify(item);
+
+      if (req.xhr) {
+
+        //this is not xhr it was by url route
+      }
+      else {
+        res.header('Cache-Control', 'no-cache, no-store, must-revalidate');
+        console.log('sending xhr: ');
+        console.dir(outcome.results);
+        res.send(outcome.results);
+      }
+ 
+  });
+
+};
+
 exports.create = function(req, res, next){
   var workflow = req.app.utility.workflow(req, res);
 
@@ -72,11 +108,11 @@ exports.create = function(req, res, next){
   workflow.emit('validate');
 };
 
-/*exports.update = function(req, res, next){
+exports.update = function(req, res, next){
   var workflow = req.app.utility.workflow(req, res);
 
   workflow.on('validate', function() {
-    if (!req.body.first) {
+    /*if (!req.body.first) {
       workflow.outcome.errfor.first = 'required';
     }
 
@@ -86,44 +122,34 @@ exports.create = function(req, res, next){
 
     if (workflow.hasErrors()) {
       return workflow.emit('response');
-    }
+    }*/
 
-    workflow.emit('patchAccount');
+    workflow.emit('patchItem');
   });
 
-  workflow.on('patchAccount', function() {
+  workflow.on('patchItem', function() {
     var fieldsToSet = {
-      name: {
-        first: req.body.first,
-        middle: req.body.middle,
-        last: req.body.last,
-        full: req.body.first +' '+ req.body.last
-      },
-      company: req.body.company,
-      phone: req.body.phone,
-      zip: req.body.zip,
-      search: [
-        req.body.first,
-        req.body.middle,
-        req.body.last,
-        req.body.company,
-        req.body.phone,
-        req.body.zip
-      ]
+      grape: req.body.grape,
+      estate: req.body.estate,
+      name: req.body.name,
+      notes: req.body.notes,
+      rating: req.body.rating,
+      //createdById: req.body.createdById,
+      //createdByName: req.body.createdByname
     };
 
-    req.app.db.models.Account.findByIdAndUpdate(req.params.id, fieldsToSet, function(err, account) {
+    req.app.db.models.Wine.update(fieldsToSet, {where: {id: req.body.id} }, function(err, item) {
       if (err) {
         return workflow.emit('exception', err);
       }
 
-      workflow.outcome.account = account;
+      workflow.outcome.item = item;
       return workflow.emit('response');
     });
   });
 
   workflow.emit('validate');
-};*/
+};
 
 exports.delete = function(req, res, next){
   var workflow = req.app.utility.workflow(req, res);
